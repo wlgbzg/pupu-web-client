@@ -47,7 +47,7 @@ export interface Guild {
     intro: string;
     cover: string;
     defaultChannelId: string;
-    memberCount:number;
+    memberCount: number;
 }
 
 //

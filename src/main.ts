@@ -9,6 +9,7 @@ import 'element-plus/dist/index.css'
 import * as ElementPlusIconsVue from '@element-plus/icons-vue'
 //引入持久化插件
 import piniaPluginPersistedstate from 'pinia-plugin-persistedstate'
+import {Buffer} from 'buffer';
 
 const app = createApp(App)
 //创建store实例
@@ -26,7 +27,6 @@ for (const [key, component] of Object.entries(ElementPlusIconsVue)) {
     app.component(key, component)
 }
 
-import { Buffer } from 'buffer';
 window.Buffer = Buffer;
 
 app.mount('#app')

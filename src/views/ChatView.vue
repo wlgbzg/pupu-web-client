@@ -48,7 +48,7 @@
 </template>
 <script setup lang="ts">
 import IconChannel from "@/components/icons/IconChannel.vue";
-import {defineProps, nextTick, onMounted, PropType, ref, toRefs, watch, watchEffect} from "vue";
+import {nextTick, onMounted, ref, watch, watchEffect} from "vue";
 import {useRoute} from "vue-router";
 import {useGuildStore} from "@/stores/guild";
 import IconHelp from "@/components/icons/IconHelp.vue";
@@ -60,12 +60,11 @@ import IconAdd from "@/components/icons/IconAdd.vue";
 import IconSticker from "@/components/icons/IconSticker.vue";
 import IconGif from "@/components/icons/IconGif.vue";
 import IconGift from "@/components/icons/IconGift.vue";
-import type {Channel, Message} from "@/types/beans";
+import type {Channel} from "@/types/beans";
 import MessageListView from "@/views/MessageListView.vue";
 import {eventBus} from "@/utils/mitt";
 import {useUserStore} from "@/stores/user";
 import httpRequest from "@/utils/httpRequest";
-
 
 
 const route = useRoute();

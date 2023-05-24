@@ -33,7 +33,6 @@ import router from "@/router";
 import {ref} from "vue";
 import {useGuildStore} from "@/stores/guild";
 import httpRequest from "@/utils/httpRequest";
-import {eventBus} from "@/utils/mitt";
 import {ElMessage} from "element-plus";
 
 const guildStore = useGuildStore()

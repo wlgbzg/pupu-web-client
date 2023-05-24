@@ -17,16 +17,9 @@
     </div>
 </template>
 <script setup lang="ts">
-import ChannelView from "@/views/ChannelView.vue";
 import UserPanelView from "@/views/UserPanelView.vue";
 import {useRoute} from "vue-router";
-import IconArrowBack from "@/components/icons/IconArrowBack.vue";
-import router from "@/router";
-import {ref} from "vue";
 import {useGuildStore} from "@/stores/guild";
-import httpRequest from "@/utils/httpRequest";
-import {eventBus} from "@/utils/mitt";
-import {ElMessage} from "element-plus";
 import DiscoveryDirectoryView from "@/views/DiscoveryDirectoryView.vue";
 import DiscoverySearchView from "@/views/DiscoverySearchView.vue";
 
