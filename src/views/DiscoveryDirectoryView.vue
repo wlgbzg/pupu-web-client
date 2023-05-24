@@ -40,12 +40,14 @@ directoryBoxList.push({key: 'study', title: '教育', icon: IconStudy})
 directoryBoxList.push({key: 'tech', title: '科学&技术', icon: IconTech})
 directoryBoxList.push({key: 'fun', title: '娱乐', icon: IconFun})
 
-const currKey = ref(discoveryGuildStore.defaultDiscoveryKey)
+const currKey = ref('')
 
 const changeType = (key) => {
     currKey.value = key
     discoveryGuildStore.changeKey(key)
 }
+
+changeType(discoveryGuildStore.defaultDiscoveryKey)
 
 </script>
 <style scoped lang="less">

@@ -3,7 +3,7 @@ import {defineStore} from "pinia";
 import type {Guild} from "@/types/beans";
 
 export const useDiscoveryGuildStore = defineStore("discoveryGuild", () => {
-        const defaultDiscoveryKey = 'key';
+        const defaultDiscoveryKey = 'home';
         // 我的推荐
         const discoveryGuild = reactive({});
 
@@ -22,7 +22,7 @@ export const useDiscoveryGuildStore = defineStore("discoveryGuild", () => {
             Object.keys(data).forEach((key) => {
                 discoveryGuild[key] = data[key]
             })
-            changeKey('home')
+            changeKey(discoveryKey.value)
         }
 
         return {defaultDiscoveryKey, discoveryGuild, discoveryKey, currentDiscoveryGuild, changeKey, updateDiscoveryGuild};
