@@ -4,7 +4,7 @@
     <div class="main-container w-screen">
         <div class="container">
             <div class="left-container">
-                <LeftMenu/>
+                <SideBar/>
             </div>
             <div class="right-container">
                 <router-view :key="useRoute().path"/>
@@ -15,18 +15,15 @@
 
 
 <script lang="ts" setup>
-import LeftMenu from "@/views/LeftMenu.vue";
+import SideBar from "@/views/sideBar/SideBar.vue";
 import MqttManager from '@/utils/mqtt'
 import {onMounted} from "vue";
 import {useRoute} from "vue-router";
 
-// 在组件设置中定义逻辑
 onMounted(() => {
-
+    // 启动消息通道
     MqttManager.connect();
-
 });
-
 </script>
 
 <style scoped lang="less">
