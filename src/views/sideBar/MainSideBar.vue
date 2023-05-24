@@ -111,14 +111,13 @@ loadGuildList();
 .main-sidebar-divider {
   width: 50%;
   height: 2px;
-  background-color: @grey-33;
+  background-color: @sidebar-btn-background;
   border-radius: 1em;
 }
 
-
 .main-sidebar-container {
   padding-top: 10px;
-  background-color: @grey-17;
+  background-color: @sidebar-background;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -157,7 +156,7 @@ loadGuildList();
     }
 
     .main-sidebar-button {
-      background-color: @grey-33;
+      background-color: @sidebar-btn-background;
       width: 50px;
       height: 50px;
       display: flex;
@@ -178,7 +177,7 @@ loadGuildList();
     }
 
     .main-sidebar-button:hover {
-      background-color: #23a559;
+      background-color: @sidebar-btn-active-background;
       border-radius: 1em;
     }
 
@@ -187,7 +186,7 @@ loadGuildList();
     }
 
     .main-sidebar-button-active {
-      background-color: #23a559;
+      background-color: @sidebar-btn-active-background;
       border-radius: 1em;
     }
   }
