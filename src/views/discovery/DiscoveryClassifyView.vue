@@ -46,7 +46,7 @@ changeType(discoveryGuildStore.defaultDiscoveryKey)
 .discovery-classify-container {
   width: 240px;
   min-width: 240px;
-  background-color: @grey-2b;
+  background-color: @discovery-classify-background;
   user-select: none;
 
   h2 {
@@ -63,7 +63,7 @@ changeType(discoveryGuildStore.defaultDiscoveryKey)
     margin: 4px 8px;
     border-radius: 4px;
     cursor: pointer;
-    color: @grey-95;
+    color: @discovery-classify-font-color;
 
     .icon {
       margin-right: 12px;
@@ -77,16 +77,16 @@ changeType(discoveryGuildStore.defaultDiscoveryKey)
 
   .classify:hover {
     color: white;
-    background-color: @white-alpha-0A;
+    background-color: @discovery-classify-hover;
   }
 
   .selected {
-    background-color: @discovery-directory-btn-active;
+    background-color: @discovery-classify-active;
     color: white;
   }
 
   .selected:hover {
-    background-color: @discovery-directory-btn-active;
+    background-color: @discovery-classify-active;
   }
 }
 

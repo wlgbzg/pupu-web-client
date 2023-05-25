@@ -15,7 +15,7 @@
 
 
 <script lang="ts" setup>
-import SideBar from "@/views/sideBar/SideBar.vue";
+import SideBar from "@/views/sidebar/SideBar.vue";
 import MqttManager from '@/utils/mqtt'
 import {onMounted} from "vue";
 import {useRoute} from "vue-router";

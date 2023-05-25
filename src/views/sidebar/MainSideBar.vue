@@ -28,7 +28,7 @@ import IconHome from "@/components/icons/sidebar/IconHome.vue";
 import IconDownload from "@/components/icons/sidebar/IconDownload.vue";
 import IconDiscovery from "@/components/icons/sidebar/IconDiscovery.vue";
 import IconAdd from "@/components/icons/sidebar/IconAdd.vue";
-import SideBar from "@/views/sideBar/SideBar.vue";
+import SideBar from "@/views/sidebar/SideBar.vue";
 
 const guildStore = useGuildStore();
 const route = useRoute();
@@ -177,7 +177,7 @@ loadGuildList();
     }
 
     .main-sidebar-button:hover {
-      background-color: @sidebar-btn-active-background;
+      background-color: @sidebar-btn-active;
       border-radius: 1em;
     }
 
@@ -186,7 +186,7 @@ loadGuildList();
     }
 
     .main-sidebar-button-active {
-      background-color: @sidebar-btn-active-background;
+      background-color: @sidebar-btn-active;
       border-radius: 1em;
     }
   }

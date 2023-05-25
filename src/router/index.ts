@@ -2,7 +2,7 @@
 import {createRouter, createWebHistory} from "vue-router";
 import LoginView from "@/views/LoginView.vue";
 import MainView from "@/views/MainView.vue";
-import GuildView from "@/views/GuildView.vue";
+import GuildView from "@/views/guild/GuildView.vue";
 import DiscoveryGuildView from "@/views/discovery/DiscoveryGuildView.vue";
 import ChatView from "@/views/ChatView.vue";
 import HomeView from "@/views/HomeView.vue";

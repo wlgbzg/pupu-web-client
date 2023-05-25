@@ -4,7 +4,7 @@
             <DiscoveryClassifyView class="flex-1"/>
             <UserPanelView/>
         </div>
-        <RouterView :key="useRoute().path"/>
+        <RouterView class="flex-1" :key="useRoute().path"/>
     </div>
 </template>
 <script setup lang="ts">

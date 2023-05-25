@@ -8,23 +8,36 @@
   opacity: 0.6;
 }
 
-// new
+// sidebar
 @sidebar-background: #171a1d;
 @sidebar-btn-background: #33383e;
-@sidebar-btn-active-background: #23a559;
+@sidebar-btn-active: #23a559;
+
+// guild
+@guild-header-background: #3c45a5;
+@guild-header-btn-hover: #5865F2;
+
+// channel
+@channel-background: #2b2d31;
+@channel-item-active: #FFFFFF14;
+@channel-item-hover: #FFFFFF0A;
+@channel-head-hover: #FFFFFF0A;
+@channel-font-color: #95a1b4;
+
+// discovery-classify
+@discovery-classify-background: #2b2d31;
+@discovery-classify-font-color: #95a1b4;
+@discovery-classify-hover: #FFFFFF0A;
+@discovery-classify-active: #5865F2;
 
 
-
-
-
-
-
+//----
 
 // grey
 @grey-17: #171a1d;
 @grey-23: #232428;
 @grey-23-50: #23242850;
-@grey-2b: #2b2d31;
+
 @grey-31: #313338;
 @grey-33: #33383e;
 @grey-95: #95a1b4;
@@ -34,14 +47,12 @@
 // white
 @white-alpha-0A: #FFFFFF0A;
 @white-alpha-14: #FFFFFF14;
-@white-alpha-FF: #FFFFFFFF;
 
 // blue
 @blue-level-color-34: #3498DB;
-@blue-level-color-3c: #3c45a5;
-@blue-level-color-3c-light: #5865F2;
 
-@discovery-directory-btn-active: #5865F2;
+
+
 
 .channel-icon-default {
   color: @grey-ca;
@@ -63,6 +74,11 @@
 
 .flex {
   display: flex;
+}
+
+.flex-center {
+  justify-content: center;
+  align-items: center;
 }
 
 .flex-column {
