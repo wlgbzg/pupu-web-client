@@ -1,20 +1,20 @@
-import {reactive} from "vue";
-import {defineStore} from "pinia";
+import { reactive } from 'vue'
+import { defineStore } from 'pinia'
 
 
-export const useUserTokenStore = defineStore("user-token", () => {
+export const useUserTokenStore = defineStore('user-token', () => {
 
-    const userToken = reactive({
-        id: '',
-        profileComplete: true,
-        token: ''
-    })
+  const userToken = reactive({
+    id: '',
+    profileComplete: true,
+    token: ''
+  })
 
-    const updateUserToken = (_userToken) => {
-        Object.assign(userToken, _userToken)
-    };
+  const updateUserToken = (_userToken) => {
+    Object.assign(userToken, _userToken)
+  }
 
-    return {userToken, updateUserToken};
+  return { userToken, updateUserToken }
 }, {
-    persist: true
-});
+  persist: true
+})

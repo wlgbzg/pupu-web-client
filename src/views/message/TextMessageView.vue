@@ -4,16 +4,16 @@
   </span>
 </template>
 
-<script setup lang="ts">
-import {defineProps, PropType, toRefs} from "vue";
-import {TextMessageBean} from "@/types/beans";
+<script lang='ts' setup>
+  import { defineProps, PropType, toRefs } from 'vue'
+  import { TextMessageBean } from '@/types/beans'
 
-const props = defineProps({
+  const props = defineProps({
     messageBody: {
-        type: Object as PropType<TextMessageBean>,
-        required: true,
-    },
-});
-const {messageBody} = toRefs(props)!
+      type: Object as PropType<TextMessageBean>,
+      required: true
+    }
+  })
+  const { messageBody } = toRefs(props)!
 
 </script>

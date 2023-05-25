@@ -1,19 +1,19 @@
 <template>
-    <div class="sidebar-container h-screen">
-        <MainSideBar/>
+  <div class='sidebar-container h-screen'>
+    <MainSideBar />
 
-    </div>
+  </div>
 
 </template>
 
-<script setup lang="ts">
-import MainSideBar from "@/views/sidebar/MainSideBar.vue";
+<script lang='ts' setup>
+  import MainSideBar from '@/views/sidebar/MainSideBar.vue'
 </script>
 
-<style scoped lang="less">
-@import "@/assets/less/base";
+<style lang='less' scoped>
+  @import "@/assets/less/base";
 
-.sidebar-container {
+  .sidebar-container {
 
-}
+  }
 </style>

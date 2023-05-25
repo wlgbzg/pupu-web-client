@@ -1,17 +1,17 @@
-import {reactive} from "vue";
-import {defineStore} from "pinia";
+import { reactive } from 'vue'
+import { defineStore } from 'pinia'
 
-export const useAppConfigStore = defineStore("appConfigStore", () => {
+export const useAppConfigStore = defineStore('appConfigStore', () => {
 
-    const appConfig = reactive({
-        appName: '',
-        welcomeTitle: '',
-        welcomeSubTitle: ''
-    })
+  const appConfig = reactive({
+    appName: '',
+    welcomeTitle: '',
+    welcomeSubTitle: ''
+  })
 
-    const updateAppConfig = (_appConfig) => {
-        Object.assign(appConfig, _appConfig)
-    };
+  const updateAppConfig = (_appConfig) => {
+    Object.assign(appConfig, _appConfig)
+  }
 
-    return {appConfig, updateAppConfig};
-});
+  return { appConfig, updateAppConfig }
+})
