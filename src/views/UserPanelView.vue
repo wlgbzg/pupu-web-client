@@ -17,9 +17,9 @@
 <script lang='ts' setup>
   import httpRequest from '@/utils/httpRequest'
   import { useUserProfileStore } from '@/stores/user'
-  import IconMute from '@/components/icons/IconMute.vue'
-  import IconHeadSetMute from '@/components/icons/IconHeadSetMute.vue'
-  import IconSettings24 from '@/components/icons/IconSettings24.vue'
+  import IconMute from '@/components/icons/user/IconMute.vue'
+  import IconHeadSetMute from '@/components/icons/user/IconHeadSetMute.vue'
+  import IconSettings24 from '@/components/icons/user/IconSettings24.vue'
 
   const userStore = useUserProfileStore()
   const loadUser = () => {

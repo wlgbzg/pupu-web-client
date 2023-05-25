@@ -36,11 +36,11 @@
   </div>
 </template>
 <script lang='ts' setup>
-  import IconArrowDown from '@/components/icons/IconArrowDown.vue'
-  import IconChannel from '@/components/icons/IconChannel.vue'
-  import IconSettings from '@/components/icons/IconSettings.vue'
-  import IconPlusUser from '@/components/icons/IconPlusUser.vue'
-  import IconPlus from '@/components/icons/IconPlus.vue'
+  import IconArrowDown from '@/components/icons/channel/IconArrowDown.vue'
+  import IconChannel from '@/components/icons/channel/IconChannel.vue'
+  import IconSettings from '@/components/icons/channel/IconSettings.vue'
+  import IconPlusUser from '@/components/icons/channel/IconPlusUser.vue'
+  import IconPlus from '@/components/icons/channel/IconPlus.vue'
   import router from '@/router'
   import { useRoute } from 'vue-router'
   import httpRequest from '@/utils/httpRequest'

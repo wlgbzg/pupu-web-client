@@ -11,13 +11,13 @@
   </div>
 </template>
 <script lang='ts' setup>
-  import IconMainPage from '@/components/icons/IconMainPage.vue'
+  import IconMainPage from '@/components/icons/discovery/IconMainPage.vue'
   import { reactive, ref } from 'vue'
-  import IconGame from '@/components/icons/IconGame.vue'
-  import IconMusic from '@/components/icons/IconMusic.vue'
-  import IconStudy from '@/components/icons/IconStudy.vue'
-  import IconTech from '@/components/icons/IconTech.vue'
-  import IconFun from '@/components/icons/IconFun.vue'
+  import IconGame from '@/components/icons/discovery/IconGame.vue'
+  import IconMusic from '@/components/icons/discovery/IconMusic.vue'
+  import IconStudy from '@/components/icons/discovery/IconStudy.vue'
+  import IconTech from '@/components/icons/discovery/IconTech.vue'
+  import IconFun from '@/components/icons/discovery/IconFun.vue'
   import { useDiscoveryGuildStore } from '@/stores/discoverGuild'
 
   const discoveryGuildStore = useDiscoveryGuildStore()

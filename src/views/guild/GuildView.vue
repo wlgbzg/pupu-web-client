@@ -22,7 +22,7 @@
   import ChannelView from '@/views/guild/ChannelView.vue'
   import UserPanelView from '@/views/UserPanelView.vue'
   import { useRoute } from 'vue-router'
-  import IconArrowBack from '@/components/icons/IconArrowBack.vue'
+  import IconArrowBack from '@/components/icons/guild/IconArrowBack.vue'
   import router from '@/router'
   import { ref, watchEffect } from 'vue'
   import httpRequest from '@/utils/httpRequest'
