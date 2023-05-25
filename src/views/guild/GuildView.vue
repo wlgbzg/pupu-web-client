@@ -33,7 +33,9 @@ const guildStore = useGuildStore()
 const route = useRoute()
 const isInGuild = ref(true);
 watchEffect(() => {
-    isInGuild.value = guildStore.exist(route.params.guildId.toString())
+    if (route.params.guildId) {
+        isInGuild.value = guildStore.exist(route.params.guildId.toString())
+    }
 });
 
 const joinGuild = () => {
