@@ -1,42 +1,27 @@
 <template>
-    <div class="user-panel-main-container">
-        <div class="user-left">
-
-            <div class="user-left-avatar">
-                <div class="user-avatar">
-                    <img src="@/assets/images/default-head.svg" v-if="!userStore.user.avatar" alt="" width="28"
-                         height="28"/>
-                    <el-image style="height: 28px; width: 28px" :src="userStore.user.avatar"
-                              v-if="userStore.user.avatar"/>
-                </div>
+    <div class="user-panel-container">
+        <div class="user-info-container">
+            <div class="avatar">
+                <img src="@/assets/images/default-head.svg" v-if="!userStore.user.avatar" alt="" width="28" height="28"/>
+                <el-image style="height: 28px; width: 28px" :src="userStore.user.avatar" v-if="userStore.user.avatar"/>
             </div>
             {{ userStore.user.name }}
-
         </div>
-        <div class="user-right">
-            <div class="user-right-btn">
-                <IconMute/>
-            </div>
-            <div class="user-right-btn">
-                <IconHeadSetMute/>
-            </div>
-            <div class="user-right-btn">
-                <IconSettings24/>
-            </div>
+        <div class="panel-btn-container">
+            <IconMute class="panel-btn"/>
+            <IconHeadSetMute class="panel-btn"/>
+            <IconSettings24 class="panel-btn"/>
         </div>
     </div>
 </template>
 <script setup lang="ts">
 import httpRequest from "@/utils/httpRequest";
-import {useRoute} from "vue-router";
 import {useUserStore} from "@/stores/user";
 import IconMute from "@/components/icons/IconMute.vue";
 import IconHeadSetMute from "@/components/icons/IconHeadSetMute.vue";
 import IconSettings24 from "@/components/icons/IconSettings24.vue";
 
-const route = useRoute();
 const userStore = useUserStore();
-
 const loadUser = () => {
     httpRequest.request({
         url: "/api/v1/user/profile",
@@ -54,73 +39,69 @@ loadUser();
 <style scoped lang="less">
 @import "@/assets/less/base.less";
 
-
-
-.user-panel-main-container {
+.user-panel-container {
   color: white;
   height: 52px;
   width: 100%;
-  background-color: @grey-23;
+  background-color: @user-panel-background;
   display: flex;
   flex-direction: row;
   justify-content: center;
   align-items: center;
   font-size: 14px;
 
-  .user-left {
+  .user-info-container {
     flex: 1;
     display: flex;
     align-items: center;
     margin: 0 10px;
     border-radius: 5px;
 
-    .user-left-avatar {
+    .avatar {
       position: relative;
       margin: 5px 10px 5px 5px;
-
-      .user-avatar {
-        display: flex;
-        align-items: center;
-        border: 2px solid lime;
-        border-radius: 50%;
-        padding: 2px;
-      }
-
-      .user-avatar:after {
-        content: '';
-        position: absolute;
-        right: -3px;
-        bottom: -3px;
-        width: 10px;
-        height: 10px;
-        background-color: #23a55a;
-        border-radius: 50%;
-        border: 3px solid @grey-23;
-      }
+      display: flex;
+      align-items: center;
+      border: 2px solid lime;
+      border-radius: 50%;
+      padding: 2px;
     }
+
+    .avatar:after {
+      content: '';
+      position: absolute;
+      right: -5px;
+      bottom: -5px;
+      width: 10px;
+      height: 10px;
+      background-color: #23a55a;
+      border-radius: 50%;
+      border: 3px solid @user-panel-background;
+    }
+
   }
 
-  .user-left:hover {
-    background-color: @white-alpha-14;
+  .user-info-container:hover {
+    background-color: @user-panel-hover;
     cursor: pointer;
   }
 
-  .user-right {
+  .panel-btn-container {
     display: flex;
     flex-direction: row;
     margin: 0 10px;
 
-    .user-right-btn {
+    .panel-btn {
       display: flex;
       justify-content: center;
       align-items: center;
       padding: 5px;
       border-radius: 5px;
-      color: @grey-ca;
+      color: @user-panel-btn-color;
     }
 
-    .user-right-btn:hover {
-      background-color: @white-alpha-14;
+    .panel-btn:hover {
+      background-color: @user-panel-hover;
       cursor: pointer;
       color: white;
     }

@@ -182,7 +182,7 @@ function handleInputEnterKey(event: KeyboardEvent) {
       align-items: center;
 
       .chat-head-btn {
-        color: @grey-ca;
+        color: @user-panel-btn-color;
         margin: 0 10px;
       }
 
@@ -213,7 +213,7 @@ function handleInputEnterKey(event: KeyboardEvent) {
 
       .chat-input-btn {
         padding: 10px 8px 0 8px;
-        color: @grey-ca;
+        color: @user-panel-btn-color;
       }
 
       .chat-input-btn:hover {
