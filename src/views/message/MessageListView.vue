@@ -2,7 +2,7 @@
     <div class="message-list-container">
 
         <!-- 消息记录 -->
-        <div class="message-list" ref="container">
+        <div class="message-list" ref="messageListRef">
             <MessageView :msg="message" class="message-box" v-for="message in messageList"/>
         </div>
 
@@ -34,7 +34,7 @@ const channel = ref<Channel | undefined>(undefined);
 // 聊天消息列表
 const messageList = reactive<Message[]>([]);
 // 最外层的DOM对象引用
-const container = ref();
+const messageListRef = ref();
 // 滚动条是否在底部
 const isAtBottom = ref(true)
 
@@ -81,7 +81,7 @@ function add(message: Message) {
 const receiveMessage = (message: Message) => {
     add(message)
     nextTick().then(() => {
-        scrollBottom()
+        scrollBottom(false,  'rece')
     });
 }
 
@@ -89,15 +89,15 @@ const receiveMessage = (message: Message) => {
 const sendMessage = (message: Message) => {
     add(message)
     nextTick().then(() => {
-        scrollBottom(true)
+        scrollBottom(true, 'send')
     });
 }
-eventBus.on('sendMessage', sendMessage);
 
 // 在离开路由时触发取消订阅
 onBeforeRouteLeave((to, from, next) => {
     const lastChannelId = from.params.channelId.toString();
     MqttManager.unsubscribeTopic('channel-' + lastChannelId);
+    eventBus.off('sendMessage', sendMessage);
     next();
 })
 
@@ -105,6 +105,7 @@ onBeforeRouteLeave((to, from, next) => {
 onBeforeRouteUpdate((to, from, next) => {
     const lastChannelId = from.params.channelId.toString();
     MqttManager.unsubscribeTopic('channel-' + lastChannelId);
+    eventBus.off('sendMessage', sendMessage);
     next();
 })
 
@@ -121,15 +122,17 @@ onMounted(() => {
         // 处理接收到的消息
         receiveMessage(JSON.parse(message))
     });
+    // 进入页面触发
+    eventBus.on('sendMessage', sendMessage);
     // 监听滚动条滚动事件
-    container.value.addEventListener('scroll', handleScroll);
+    messageListRef.value.addEventListener('scroll', handleScroll);
 })
 
 // 滚动到底部
-const scrollBottom = (force: boolean = false) => {
+const scrollBottom = (force: boolean = false, num:string = '') => {
     if (force || isAtBottom.value) {
-        if (container.value.scrollHeight > container.value.clientHeight) {
-            container.value.scrollTo(0, container.value.scrollHeight);
+        if (messageListRef.value.scrollHeight > messageListRef.value.clientHeight) {
+            messageListRef.value.scrollTo(0, messageListRef.value.scrollHeight);
         }
     }
 }
@@ -137,7 +140,7 @@ const scrollBottom = (force: boolean = false) => {
 // 判断滚动条是否在底部
 const handleScroll = () => {
     const scrollThreshold = 50; // 定义接近底部的像素阈值
-    isAtBottom.value = container.value.scrollTop + container.value.clientHeight >= container.value.scrollHeight - scrollThreshold;
+    isAtBottom.value = messageListRef.value.scrollTop + messageListRef.value.clientHeight >= messageListRef.value.scrollHeight - scrollThreshold;
 }
 
 
