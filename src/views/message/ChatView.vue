@@ -30,7 +30,7 @@
 </template>
 <script setup lang="ts">
 import IconChannel from "@/components/icons/IconChannel.vue";
-import {nextTick, onMounted, ref, watch} from "vue";
+import {nextTick, onMounted, ref, watch, watchEffect} from "vue";
 import {useRoute} from "vue-router";
 import {useGuildStore} from "@/stores/guild";
 import IconHelp from "@/components/icons/IconHelp.vue";
@@ -45,12 +45,18 @@ import IconGift from "@/components/icons/IconGift.vue";
 import MessageListView from "@/views/message/MessageListView.vue";
 import {eventBus} from "@/utils/mitt";
 import httpRequest from "@/utils/httpRequest";
+import type {Channel} from "@/types/beans";
 
 const route = useRoute();
 const guildStore = useGuildStore();
 const channelId = route.params.channelId.toString();
-const channel = guildStore.getChannel(channelId);
+const channel = ref<Channel | undefined>(undefined);
 
+watchEffect(() => {
+    if (route.params.channelId) {
+        channel.value = guildStore.getChannel(channelId);
+    }
+});
 // 文本框
 const textareaRef = ref();
 // 文本框行数

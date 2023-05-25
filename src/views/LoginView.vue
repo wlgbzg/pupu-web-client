@@ -115,7 +115,7 @@
   color: aliceblue;
 
   .login-box {
-    background-color: @grey-33;
+    background-color: @login-form-background;
     width: 800px;
     height: 400px;
     border-radius: 6px;

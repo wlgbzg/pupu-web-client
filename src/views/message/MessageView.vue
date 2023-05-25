@@ -1,18 +1,24 @@
 <template>
     <div class="msg-container">
-        <div class="msg-left">
-            <el-image class="avatar"
-                      src="https://gss0.baidu.com/-Po3dSag_xI4khGko9WTAnF6hhy/zhidao/wh%3D450%2C600/sign=e58ae9feb1003af34defd464001aea6a/8601a18b87d6277f4d763bcf2f381f30e824fce5.jpg"/>
+        <!-- 发消息人头像 -->
+        <div class="from-avatar">
+            <el-image v-if="!msg?.user.avatar" class="avatar"  src="https://gss0.baidu.com/-Po3dSag_xI4khGko9WTAnF6hhy/zhidao/wh%3D450%2C600/sign=e58ae9feb1003af34defd464001aea6a/8601a18b87d6277f4d763bcf2f381f30e824fce5.jpg"/>
+            <el-image v-if="msg?.user.avatar"  class="avatar"  :src="msg?.user.avatar"/>
         </div>
-        <div class="msg-right">
-            <div class="msg-top">
-                <div class="sender-name">{{ msg?.user.name }}</div>
-                <div class="sender-time">{{ formatTimestamp(msg?.time) }}</div>
+
+        <div class="msg-body">
+
+            <!-- 消息头部 -->
+            <div class="header">
+                <div class="from-name">{{ msg?.user.name }}</div>
+                <div class="from-time">{{ formatTimestamp(msg?.time) }}</div>
             </div>
-            <div class="msg-content">
-                <TextMessageView v-if="msg?.type === 1" :messageBody="msg?.body as TextMessageBean"/>
-            </div>
+
+            <!-- 消息内容 -->
+            <TextMessageView v-if="msg?.type === 1" :messageBody="msg?.body as TextMessageBean" class="msg-content"/>
         </div>
+
+        <!-- 右侧控制按钮 -->
         <div class="msg-ctrl">
             <el-icon>
                 <MoreFilled/>
@@ -42,9 +48,8 @@ const {msg} = toRefs(props)
   flex-direction: row;
   margin-top: 5px;
   margin-bottom: 10px;
-  //overflow: auto;
 
-  .msg-left {
+  .from-avatar {
     margin-left: 15px;
     margin-top: 2px;
     height: 40px;
@@ -58,29 +63,29 @@ const {msg} = toRefs(props)
     }
   }
 
-  .msg-right {
+  .msg-body {
     width: 100%;
     margin-left: 10px;
 
-    .msg-top {
+    .header {
       display: flex;
       flex-direction: row;
       align-items: center;
 
-      .sender-name {
+      .from-name {
         font-size: 0.95em;
-        color: @blue-level-color-34;
+        color: @message-from-name-color;
       }
 
-      .sender-time {
+      .from-time {
         margin-left: 10px;
         font-size: 0.75em;
-        color: @grey-95;
+        color: @message-from-time-color;
       }
     }
 
     .msg-content {
-      color: @grey-db;
+      color: @message-content-color;
       font-size: 0.95em;
       line-height: 1.4em;
       width: 95%;
@@ -97,7 +102,7 @@ const {msg} = toRefs(props)
     justify-content: center;
     align-items: center;
     border-radius: 4px;
-    border: @grey-17 1px solid;
+    border: @message-ctrl-border 1px solid;
     background-color: #313338;
     cursor: pointer;
     visibility: hidden;
@@ -105,11 +110,10 @@ const {msg} = toRefs(props)
 }
 
 .msg-container:hover {
-  background-color: @grey-23-50;
+  background-color: @message-hover;
 
   .msg-ctrl {
     visibility: visible;
-    //background-color: red;
   }
 }
 </style>

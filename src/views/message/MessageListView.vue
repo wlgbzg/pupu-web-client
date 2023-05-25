@@ -1,9 +1,13 @@
 <template>
-    <div class="message-main-container" ref="container">
-        <div class="message-box" v-for="message in messageList">
-            <MessageView :msg="message"/>
+    <div class="message-list-container">
+
+        <!-- 消息记录 -->
+        <div class="message-list" ref="container">
+            <MessageView :msg="message" class="message-box" v-for="message in messageList"/>
         </div>
-        <div class="show-to-bottom" v-if="!isAtBottom" @click="scrollBottom(true)">
+
+        <!-- 浮窗 -->
+        <div class="floating-window" v-if="!isAtBottom" @click="scrollBottom(true)">
             <el-icon>
                 <ArrowDownBold/>
             </el-icon>
@@ -35,7 +39,7 @@ const container = ref();
 const isAtBottom = ref(true)
 
 // 获取历史聊天消息列表数据
-const loadMessageList = (channelId: string, time: number = 9999999999999) => {
+const load = (channelId: string, time: number = 9999999999999) => {
     httpRequest.request({
         url: "/api/v1/message/channel/messageList",
         method: "post",
@@ -111,14 +115,11 @@ onMounted(() => {
     // 获取channel对象
     channel.value = guildStore.getChannel(channelId.value);
     // 获取消息记录
-    loadMessageList(channelId.value);
+    load(channelId.value);
     // 在进入组件时触发订阅
     MqttManager.subscribeTopic('channel-' + channelId.value, (topic, message) => {
         // 处理接收到的消息
-
-        let m = JSON.parse(message) as Message
-        receiveMessage(m)
-
+        receiveMessage(JSON.parse(message))
     });
     // 监听滚动条滚动事件
     container.value.addEventListener('scroll', handleScroll);
@@ -144,38 +145,34 @@ const handleScroll = () => {
 <style scoped lang="less">
 @import "@/assets/less/base.less";
 
+.message-list-container {
+  overflow: hidden;
+  position: relative;
 
-.message-main-container {
-  flex: 1;
-  color: white;
-  display: flex;
-  //height: 100vh;
-  flex-direction: column;
-  padding-top: 10px;
-  overflow-y: auto;
-  overflow-x: hidden;
-
-  .message-box {
-
+  .message-list {
+    flex: 1;
+    color: white;
+    display: flex;
+    flex-direction: column;
+    padding-top: 10px;
+    overflow-y: auto;
+    overflow-x: hidden;
   }
 
-  .show-to-bottom {
+  .floating-window {
     width: 40px;
     height: 40px;
     display: flex;
     justify-content: center;
     align-items: center;
-    position: fixed;
+    position: absolute;
     border-radius: 50%;
     font-size: 14px;
-    background-color: @grey-23-50;
-    border: 1px solid @grey-17;
-    bottom: 80px;
-    right: 200px;
+    background-color: @message-floating-background;
+    border: 1px solid @message-floating-border;
+    bottom: 5%;
+    right: 10%;
     cursor: pointer;
   }
-
 }
-
-
 </style>
