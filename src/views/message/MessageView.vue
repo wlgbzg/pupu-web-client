@@ -22,7 +22,7 @@
 
 </template>
 <script setup lang="ts">
-import TextMessageView from "@/components/message/TextMessageView.vue";
+import TextMessageView from "@/views/message/TextMessageView.vue";
 import {defineProps, PropType, toRefs} from "vue";
 import type {Message, TextMessageBean} from "@/types/beans";
 import {formatTimestamp} from "@/utils/time";

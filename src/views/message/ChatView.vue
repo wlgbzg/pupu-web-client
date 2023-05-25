@@ -1,54 +1,36 @@
 <template>
-    <div class="chat-main-container ">
+    <!-- 聊天界面 -->
+    <div class="chat-container ">
 
+        <!-- 头部 -->
         <div class="head-container">
-        <span class="head-left">
-          <IconChannel class="channel-icon-default"/>
-          {{ channel?.name }}
-        </span>
-            <span class="head-right">
-        <IconSubZone class="chat-head-btn"/>
-        <IconNotify class="chat-head-btn"/>
-        <IconMark class="chat-head-btn"/>
-        <IconMember class="chat-head-btn"/>
-        <IconHelp class="chat-head-btn"/>
-      </span>
+            <span class="channel-info"><IconChannel class="channel-icon-default"/>{{ channel?.name }}</span>
+            <span class="head-btn"><IconSubZone class="chat-head-btn"/><IconNotify class="chat-head-btn"/><IconMark class="chat-head-btn"/><IconMember class="chat-head-btn"/><IconHelp
+                    class="chat-head-btn"/></span>
         </div>
-        <div class="message-container">
-            <MessageListView/>
-        </div>
-        <div class="chat-input-container">
 
-            <div class="chat-input-top"></div>
+        <!-- 消息列表 -->
+        <MessageListView class="message-container"/>
 
-            <div class="chat-input-box">
-                <div class="chat-input-btn">
-                    <IconAdd/>
-                </div>
-                <div class="chat-input-text">
-          <textarea class="msg-input" ref="textareaRef" v-model="content" :rows="rows" :placeholder="inputPlaceHolder"
-                    @keydown.enter="handleInputEnterKey"/>
-                </div>
-                <div class="chat-input-btn">
-                    <IconGift/>
-                </div>
-                <div class="chat-input-btn">
-                    <IconGif/>
-                </div>
-                <div class="chat-input-btn">
-                    <IconSticker/>
-                </div>
-                <div class="chat-input-btn">
-                    <IconAdd/>
-                </div>
+        <!-- 输入框 -->
+        <div class="input-container">
+            <IconAdd class="input-btn"/>
+
+            <!-- 文本框 -->
+            <div class="input-view">
+                <textarea class="input-textarea" ref="textareaRef" v-model="content" :rows="rows" :placeholder="'给 #' + channel?.name + ' 发消息'" @keydown.enter="handleInputEnterKey"/>
             </div>
 
+            <IconGift class="input-btn"/>
+            <IconGif class="input-btn"/>
+            <IconSticker class="input-btn"/>
+            <IconAdd class="input-btn"/>
         </div>
     </div>
 </template>
 <script setup lang="ts">
 import IconChannel from "@/components/icons/IconChannel.vue";
-import {nextTick, onMounted, ref, watch, watchEffect} from "vue";
+import {nextTick, onMounted, ref, watch} from "vue";
 import {useRoute} from "vue-router";
 import {useGuildStore} from "@/stores/guild";
 import IconHelp from "@/components/icons/IconHelp.vue";
@@ -60,30 +42,20 @@ import IconAdd from "@/components/icons/IconAdd.vue";
 import IconSticker from "@/components/icons/IconSticker.vue";
 import IconGif from "@/components/icons/IconGif.vue";
 import IconGift from "@/components/icons/IconGift.vue";
-import type {Channel} from "@/types/beans";
-import MessageListView from "@/views/MessageListView.vue";
+import MessageListView from "@/views/message/MessageListView.vue";
 import {eventBus} from "@/utils/mitt";
-import {useUserStore} from "@/stores/user";
 import httpRequest from "@/utils/httpRequest";
-
 
 const route = useRoute();
 const guildStore = useGuildStore();
-const userStore = useUserStore();
-const channelId = ref("");
-const inputPlaceHolder = ref();
-const channel = ref<Channel | undefined>(undefined);
+const channelId = route.params.channelId.toString();
+const channel = guildStore.getChannel(channelId);
 
-watchEffect(() => {
-    if (route.params.channelId) {
-        channelId.value = route.params.channelId.toString();
-        channel.value = guildStore.getChannel(channelId.value);
-        inputPlaceHolder.value = "给 #" + channel.value?.name + " 发消息";
-    }
-});
-
+// 文本框
 const textareaRef = ref();
+// 文本框行数
 const rows = ref(1);
+// 输入内容
 const content = ref("");
 // 当输入框内容变化时，重新计算高度
 watch(
@@ -113,18 +85,18 @@ onMounted(() => {
     resizeObserver.observe(element);
 });
 
-const send = ()=> {
-
+const send = () => {
     httpRequest.request({
         url: "/api/v1/message/channel/send",
         method: "post",
         data: {
-            channelId: channelId.value,
+            channelId: channelId,
             type: 1,
-            body: { text: content.value }
+            body: {text: content.value}
         }
     }).then(data => {
         eventBus.emit('sendMessage', data);
+        content.value = "";
     }).catch(error => {
         console.error("请求失败1：", error);
     });
@@ -136,47 +108,46 @@ function handleInputEnterKey(event: KeyboardEvent) {
     // 按下了 Shift 键和 Enter 键
     if (event.keyCode === 13 && !event.shiftKey) {
         event.preventDefault(); // 阻止默认行为（即换行）
-        console.log("发送:", content.value);
+        if (content.value.trim().length == 0) {
+            return
+        }
         send()
-        content.value = "";
         return;
     }
 }
-
 
 
 </script>
 <style scoped lang="less">
 @import "@/assets/less/base.less";
 
-.chat-main-container {
+.chat-container {
   color: white;
   display: flex;
   height: 100vh;
   flex-direction: column;
   min-width: 600px;
+  cursor: default;
 
   .head-container {
     height: 48px;
-    box-shadow: 0 1px rgba(1, 1, 1, 0.2);
+    border-bottom: 1px solid rgba(1, 1, 1, 0.2);
     color: white;
     display: flex;
     align-items: center;
     justify-content: space-between;
     padding: 0 20px;
     font-size: 16px;
-    background-color: @grey-31;
     z-index: 999;
-    cursor: default;
     user-select: none;
 
-    .head-left {
+    .channel-info {
       display: flex;
       justify-content: center;
       align-items: center;
     }
 
-    .head-right {
+    .head-btn {
       display: flex;
       justify-content: center;
       align-items: center;
@@ -199,57 +170,48 @@ function handleInputEnterKey(event: KeyboardEvent) {
     overflow: auto;
   }
 
-  .chat-input-container {
-    margin: 10px 0;
+  .input-container {
+    display: flex;
+    flex-direction: row;
+    align-items: start;
+    background-color: @input-view-background;
+    margin: 10px 15px;
+    padding: 0 10px;
+    border-radius: 10px;
 
-    .chat-input-box {
+    .input-btn {
+      padding: 10px 8px 0 8px;
+      color: @input-view-btn-color;
+    }
+
+    .input-btn:hover {
+      color: white;
+      cursor: pointer;
+    }
+
+    .input-view {
+      flex: 1;
+      padding: 8px 0;
       display: flex;
-      flex-direction: row;
-      align-items: start;
-      background-color: @white-alpha-0A;
-      margin: 0 15px;
-      padding: 0 10px;
-      border-radius: 10px;
 
-      .chat-input-btn {
-        padding: 10px 8px 0 8px;
-        color: @user-panel-btn-color;
-      }
-
-      .chat-input-btn:hover {
-        color: white;
-        cursor: pointer;
-      }
-
-      .chat-input-text {
+      .input-textarea {
         flex: 1;
-        padding: 8px 0;
-        display: flex;
-
-        .msg-input {
-          flex: 1;
-          padding: 0 5px;
-          line-height: 29px;
-          background-color: transparent;
-          color: white;
-          border: none;
-          resize: none;
-          font-size: 16px;
-          height: auto;
-        }
-
-        .msg-input:focus {
-          outline: none;
-        }
+        padding: 0 5px;
+        line-height: 29px;
+        background-color: transparent;
+        color: white;
+        border: none;
+        resize: none;
+        font-size: 16px;
+        height: auto;
       }
 
+      .input-textarea:focus {
+        outline: none;
+      }
     }
   }
 }
 
-.el-textarea {
-  color: #606266;
-  background-color: #000;
-}
 
 </style>

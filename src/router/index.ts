@@ -4,8 +4,8 @@ import LoginView from "@/views/LoginView.vue";
 import MainView from "@/views/MainView.vue";
 import GuildView from "@/views/guild/GuildView.vue";
 import DiscoveryGuildView from "@/views/discovery/DiscoveryGuildView.vue";
-import ChatView from "@/views/ChatView.vue";
-import HomeView from "@/views/HomeView.vue";
+import ChatView from "@/views/message/ChatView.vue";
+import HomeView from "@/views/home/HomeView.vue";
 import DiscoveryRecommendView from "@/views/discovery/DiscoveryRecommendView.vue";
 
 const router = createRouter({

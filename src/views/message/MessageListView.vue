@@ -9,8 +9,6 @@
             </el-icon>
         </div>
     </div>
-
-
 </template>
 <script setup lang="ts">
 import httpRequest from "@/utils/httpRequest";
@@ -18,7 +16,7 @@ import {nextTick, onMounted, reactive, ref} from "vue";
 import {onBeforeRouteLeave, onBeforeRouteUpdate, useRoute} from "vue-router";
 import {useGuildStore} from "@/stores/guild";
 import type {Channel, Message} from "@/types/beans";
-import MessageView from "@/components/message/MessageView.vue";
+import MessageView from "@/views/message/MessageView.vue";
 import {eventBus} from "@/utils/mitt";
 import MqttManager from "@/utils/mqtt";
 

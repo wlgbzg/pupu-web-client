@@ -3,14 +3,14 @@
 
         <!--   头部   -->
         <div class="head-container">
-            <span class="head-left">{{ guildStore.channelData.guild.name }}</span>
-            <span class="head-right"><el-icon size="12"><ArrowDownBold/></el-icon></span>
+            <span class="channel-info">{{ guildStore.channelData.guild.name }}</span>
+            <span class="head-btn"><el-icon size="12"><ArrowDownBold/></el-icon></span>
         </div>
 
         <!--   频道   -->
         <div class="channel-container">
 
-            <!--   未分组头像   -->
+            <!--   未分组频道   -->
             <div class="channel-group">
                 <div class="channel-item" :class="item.id === route.params.channelId ? 'channel-item-selected' :  ''"
                      v-for="item in guildStore.getChannels()" @click="router.push({path: `/channels/${route.params.guildId}/${item.id}`})">
@@ -19,7 +19,7 @@
                 </div>
             </div>
 
-            <!--   分组头像   -->
+            <!--   分组频道   -->
             <div class="channel-group" v-for="group in guildStore.channelData.channelGroups">
                 <div class="channel-group-title">
                     <span class="channel-group-left"><IconArrowDown/><span class="channel-group-name">{{ group["name"] }}</span></span>

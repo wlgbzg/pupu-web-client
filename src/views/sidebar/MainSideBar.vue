@@ -4,15 +4,17 @@
             <div class="main-sidebar-active" v-if="isActive(item)"></div>
             <div class="main-sidebar-hover"></div>
             <div class="main-sidebar-divider" v-if="item.type == -1"></div>
-            <el-popover placement="right-start" trigger="hover" :content="item.name">
+
+            <el-popover placement="right-start" trigger="hover" :content="item.name"  v-if="item.type > -1">
                 <template #reference>
-                    <div class="main-sidebar-button" :class="{'main-sidebar-button-active': isActive(item) }" v-if="item.type > -1"
+                    <div class="main-sidebar-button" :class="{'main-sidebar-button-active': isActive(item) }"
                          @click="itemClick(item)">
                         <span v-if="!item.icon" class="main-sidebar-title">{{ item.name }}</span>
                         <component v-if="item.icon" :is="item.icon"></component>
                     </div>
                 </template>
             </el-popover>
+
         </div>
     </div>
 
