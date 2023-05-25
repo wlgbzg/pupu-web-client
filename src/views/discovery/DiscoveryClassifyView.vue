@@ -1,17 +1,13 @@
 <template>
-    <div class="discovery-directory-main-container">
+    <div class="discovery-classify-container ">
         <h2>发现</h2>
-        <div
-                :class="currKey == item.key ? 'directory-box-selected' :  ''"
-                class="directory-box" v-for="item in directoryBoxList"
-                @click="changeType(`${item.key}`)"
-        >
-            <span class="dict-icon">
+        <div :class="currKey == item.key ? 'selected' :  ''" class="classify"
+             v-for="item in list" @click="changeType(`${item.key}`)">
+            <span class="icon">
                 <component :is="item.icon"></component>
             </span>
             <span class="dict-title">{{ item.title }}</span>
         </div>
-
     </div>
 </template>
 <script setup lang="ts">
@@ -24,21 +20,15 @@ import IconTech from "@/components/icons/IconTech.vue";
 import IconFun from "@/components/icons/IconFun.vue";
 import {useDiscoveryGuildStore} from "@/stores/discoverGuild";
 
-interface DirectoryBox {
-    key: string;
-    title: string;
-    icon: Comment;
-}
-
 const discoveryGuildStore = useDiscoveryGuildStore()
 
-const directoryBoxList = reactive<DirectoryBox[]>([])
-directoryBoxList.push({key: 'home', title: '主页', icon: IconMainPage})
-directoryBoxList.push({key: 'game', title: '游戏', icon: IconGame})
-directoryBoxList.push({key: 'music', title: '音乐', icon: IconMusic})
-directoryBoxList.push({key: 'study', title: '教育', icon: IconStudy})
-directoryBoxList.push({key: 'tech', title: '科学&技术', icon: IconTech})
-directoryBoxList.push({key: 'fun', title: '娱乐', icon: IconFun})
+const list = reactive([])
+list.push({key: 'home', title: '主页', icon: IconMainPage})
+list.push({key: 'game', title: '游戏', icon: IconGame})
+list.push({key: 'music', title: '音乐', icon: IconMusic})
+list.push({key: 'study', title: '教育', icon: IconStudy})
+list.push({key: 'tech', title: '科学&技术', icon: IconTech})
+list.push({key: 'fun', title: '娱乐', icon: IconFun})
 
 const currKey = ref('')
 
@@ -53,10 +43,9 @@ changeType(discoveryGuildStore.defaultDiscoveryKey)
 <style scoped lang="less">
 @import "@/assets/less/base";
 
-.discovery-directory-main-container {
+.discovery-classify-container {
   width: 240px;
   min-width: 240px;
-  height: 100%;
   background-color: @grey-2b;
   user-select: none;
 
@@ -65,7 +54,7 @@ changeType(discoveryGuildStore.defaultDiscoveryKey)
     color: white;
   }
 
-  .directory-box {
+  .classify {
     padding: 5px 8px;
     font-size: 16px;
     font-weight: bold;
@@ -76,7 +65,7 @@ changeType(discoveryGuildStore.defaultDiscoveryKey)
     cursor: pointer;
     color: @grey-95;
 
-    .dict-icon {
+    .icon {
       margin-right: 12px;
       width: 32px;
       height: 32px;
@@ -84,22 +73,19 @@ changeType(discoveryGuildStore.defaultDiscoveryKey)
       justify-content: center;
       align-items: center;
     }
-
-    .dict-title {
-    }
   }
 
-  .directory-box:hover {
+  .classify:hover {
     color: white;
     background-color: @white-alpha-0A;
   }
 
-  .directory-box-selected {
+  .selected {
     background-color: @discovery-directory-btn-active;
     color: white;
   }
 
-  .directory-box-selected:hover {
+  .selected:hover {
     background-color: @discovery-directory-btn-active;
   }
 }

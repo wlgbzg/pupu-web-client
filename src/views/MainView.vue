@@ -1,7 +1,7 @@
 
 
 <template>
-    <div class="main-container w-screen">
+    <div class="main-view-container w-screen">
         <div class="container">
             <div class="left-container">
                 <SideBar/>
@@ -29,7 +29,7 @@ onMounted(() => {
 <style scoped lang="less">
 @import "@/assets/less/base";
 
-.main-container {
+.main-view-container {
   position: fixed;
 }
 

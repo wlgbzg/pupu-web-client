@@ -54,10 +54,14 @@ loadUser();
 <style scoped lang="less">
 @import "@/assets/less/base.less";
 
+
+
 .user-panel-main-container {
   color: white;
+  height: 52px;
+  width: 100%;
+  background-color: @grey-23;
   display: flex;
-  height: 100%;
   flex-direction: row;
   justify-content: center;
   align-items: center;

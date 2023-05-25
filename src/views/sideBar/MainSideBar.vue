@@ -53,7 +53,7 @@ list.push({
     name: "添加服务器", type: 2, icon: IconAdd
 })
 list.push({
-    name: "探索公开服务器", type: 0, url: "/discovery", icon: IconDiscovery
+    name: "探索公开服务器", type: 0, url: "/discovery-guild/recommend", icon: IconDiscovery
 })
 list.push({
     type: -1
