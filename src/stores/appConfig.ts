@@ -9,20 +9,9 @@ export const useAppConfigStore = defineStore("appConfigStore", () => {
         welcomeSubTitle: ''
     })
 
-    return {appConfig};
-}, {
-    persist: true
-});
+    const updateAppConfig = (_appConfig) => {
+        Object.assign(appConfig, _appConfig)
+    };
 
-export const useUserTokenStore = defineStore("user-token", () => {
-
-    const userConfig = reactive({
-        id: '',
-        profileComplete: true,
-        token: ''
-    })
-
-    return {userConfig};
-}, {
-    persist: true
+    return {appConfig, updateAppConfig};
 });

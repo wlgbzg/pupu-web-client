@@ -1,36 +1,23 @@
 <template>
     <div class="login-container">
+        <!-- 背景 -->
         <BgLogin/>
+
+        <!-- 登录框 -->
         <div class="login-box">
 
-            <div class="login-input-box">
+            <div class="login-form">
                 <h2>{{ appConfigStore.appConfig.welcomeTitle }}</h2>
                 <div class="translucent-60">{{ appConfigStore.appConfig.welcomeSubTitle }}</div>
-
                 <div class="form-box" v-if="formIndex === 1">
-                    <el-form
-                            ref="codeFormRef"
-                            :rules="codeRules"
-                            label-position="top"
-                            label-width="100px"
-                            :model="codeForm"
-                            style="max-width: 460px"
-                    >
+                    <el-form ref="codeFormRef" :rules="codeRules" label-position="top" label-width="100px" :model="codeForm" style="max-width: 460px">
                         <el-form-item label="手机号码" prop="phone">
-                            <el-input v-model="codeForm.phone" maxlength="11" oninput="value=value.replace(/\D/g,'')"
-                                      clearable/>
+                            <el-input v-model="codeForm.phone" maxlength="11" oninput="value=value.replace(/\D/g,'')" clearable/>
                         </el-form-item>
                         <el-form-item label="短信验证码" prop="code">
                             <div class="code-box">
-                                <el-input class="code-box-left" v-model="codeForm.verifyCode" maxlength="6"
-                                          oninput="value=value.replace(/\D/g,'')" clearable/>
-                                <el-button :disabled="codeBtnStore.disable"
-                                           @click="submitSendCodeForm(codeFormRef)"><span
-                                        v-if="codeBtnStore.counter == 0">发送验证码</span> <span
-                                        v-if="codeBtnStore.counter != 0"> 重新发送 ({{
-                                    codeBtnStore.counter
-                                    }})</span>
-                                </el-button>
+                                <el-input class="code-box-left" v-model="codeForm.verifyCode" maxlength="6" oninput="value=value.replace(/\D/g,'')" clearable/>
+                                <el-button :disabled="codeBtnStore.disable" @click="submitSendCodeForm(codeFormRef)"><span v-if="codeBtnStore.counter == 0">发送验证码</span> <span v-if="codeBtnStore.counter != 0"> 重新发送 ({{codeBtnStore.counter }})</span></el-button>
                             </div>
                         </el-form-item>
                         <el-form-item label="">
@@ -49,17 +36,9 @@
                 </div>
 
                 <div class="form-box" v-if="formIndex === 2">
-                    <el-form
-                            ref="passwordFormRef"
-                            :rules="passwordRules"
-                            label-position="top"
-                            label-width="100px"
-                            :model="passwordForm"
-                            style="max-width: 460px"
-                    >
+                    <el-form ref="passwordFormRef" :rules="passwordRules" label-position="top" label-width="100px" :model="passwordForm" style="max-width: 460px">
                         <el-form-item label="手机号码" prop="phone">
-                            <el-input v-model="passwordForm.phone" maxlength="11"
-                                      oninput="value=value.replace(/\D/g,'')" clearable/>
+                            <el-input v-model="passwordForm.phone" maxlength="11" oninput="value=value.replace(/\D/g,'')" clearable/>
                         </el-form-item>
                         <el-form-item label="密码" prop="password">
                             <el-input v-model="passwordForm.password" show-password clearable/>
@@ -68,26 +47,20 @@
                             <el-button link type="primary">忘记密码？</el-button>
                         </el-form-item>
                         <el-form-item label="">
-                            <el-button class="login-btn" type="primary" @click="submitPasswordForm(passwordFormRef)">
-                                登录
-                            </el-button>
+                            <el-button class="login-btn" type="primary" @click="submitPasswordForm(passwordFormRef)">登录</el-button>
                         </el-form-item>
                         <el-form-item label="" class="form">
-                            <el-button link class="btn-change" type="primary" @click="changeFormIndex(1)">使用短信验证码登录
-                            </el-button>
+                            <el-button link class="btn-change" type="primary" @click="changeFormIndex(1)">使用短信验证码登录</el-button>
                         </el-form-item>
                     </el-form>
                 </div>
             </div>
             <div class="login-qrcode-box">
-
                 <div class="qrcode">
                     <qrcode-vue value="通过Discord手机App扫描二维码。" size="176" margin="2"></qrcode-vue>
                 </div>
                 <h2>通过二维码登录</h2>
-                <div class="qrcode-sub-title translucent-60">通过 {{ appConfigStore.appConfig.appName }}
-                    手机App扫描二维码，便可即时登录。
-                </div>
+                <div class="qrcode-sub-title translucent-60">通过 {{ appConfigStore.appConfig.appName }} 手机App扫描二维码，便可即时登录。</div>
             </div>
 
         </div>
@@ -104,7 +77,6 @@
 }
 
 .login-container {
-
   position: fixed;
   height: 100vh;
   width: 100%;
@@ -121,7 +93,8 @@
     border-radius: 6px;
     display: flex;
 
-    .login-input-box {
+
+    .login-form {
       margin-top: 10px;
       flex: 3;
       text-align: center;
@@ -191,8 +164,9 @@ import QrcodeVue from "qrcode.vue";
 import {reactive, ref} from "vue";
 import type {FormInstance, FormRules} from "element-plus";
 import {ElMessage} from "element-plus";
-import {useAppConfigStore, useUserTokenStore} from "@/stores/appConfig";
+import {useAppConfigStore} from "@/stores/appConfig";
 import BgLogin from "@/components/background/BgLogin.vue";
+import {useUserTokenStore} from "@/stores/userToken";
 
 
 // 配置信息获取
@@ -203,10 +177,7 @@ const loadLoginConfig = () => {
         url: "/api/v1/app/config",
         method: "post"
     }).then(data => {
-        appConfigStore.appConfig.appName = data.appName;
-        appConfigStore.appConfig.welcomeTitle = data.welcomeTitle;
-        appConfigStore.appConfig.welcomeSubTitle = data.welcomeSubTitle;
-        console.log("请求成功:", data);
+        appConfigStore.updateAppConfig(data)
     }).catch(error => {
         console.error("请求失败1：", error);
     });
@@ -262,7 +233,6 @@ const submitSendCodeForm = async (formEl: FormInstance | undefined) => {
             }, 1000);
         }
 
-// codeBtnStore.disableTime =
         httpRequest.request({
             url: "/api/v1/auth/phone-verification",
             method: "post",
@@ -299,15 +269,7 @@ const submitCodeForm = async (formEl: FormInstance | undefined) => {
                 message: "登录成功",
                 type: "success"
             });
-            try {
-                userStore.userConfig.id = data.id
-                userStore.userConfig.profileComplete = data.profileComplete
-                userStore.userConfig.token = data.token
-            } catch (e) {
-                console.log("??", e)
-            }
-
-            console.log(data)
+            userStore.updateUserToken(data)
         }).catch(error => {
             ElMessage({
                 showClose: true,
