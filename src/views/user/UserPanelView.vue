@@ -2,7 +2,7 @@
   <div class='user-panel-container'>
     <div class='user-info-container'>
       <div class='avatar'>
-        <img v-if='!userStore.user.avatar' alt='' height='28' src='../../assets/images/default-head.svg' width='28' />
+        <component :is="IconDefaultHead" v-if="!userStore.user.avatar"/>
         <el-image v-if='userStore.user.avatar' :src='userStore.user.avatar' style='height: 28px; width: 28px' />
       </div>
       {{ userStore.user.name }}
@@ -20,6 +20,7 @@
   import IconMute from '@/components/icons/user/IconMute.vue'
   import IconHeadSetMute from '@/components/icons/user/IconHeadSetMute.vue'
   import IconSettings24 from '@/components/icons/user/IconSettings24.vue'
+  import IconDefaultHead from '@/components/icons/user/IconDefaultHead.vue'
 
   const userStore = useUserProfileStore()
   const loadUser = () => {
