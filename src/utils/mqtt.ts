@@ -28,7 +28,7 @@ class MqttManager {
 
         this.mqttClient.on('connect', () => {
             // 连接建立完成后，设置连接状态为true，并解析connectPromise
-            console.log('MQTT连接已建立');
+            // console.log('MQTT连接已建立');
             if (this.isConnectedResolve) {
                 this.isConnectedResolve();
                 this.isConnectedResolve = null;
@@ -37,12 +37,12 @@ class MqttManager {
 
         // 监听连接断开事件
         this.mqttClient.on('close', () => {
-            console.log('MQTT连接已关闭');
+            // console.log('MQTT连接已关闭');
         });
 
         // 监听错误事件
         this.mqttClient.on('error', (error) => {
-            console.log('MQTT连接错误', error);
+            // console.log('MQTT连接错误', error);
         });
 
         // 监听消息事件
@@ -57,7 +57,7 @@ class MqttManager {
         if (this.mqttClient) {
             this.mqttClient.end();
             this.mqttClient = null;
-            console.log('MQTT连接已断开');
+            // console.log('MQTT连接已断开');
         }
     }
 
@@ -71,7 +71,7 @@ class MqttManager {
         if (this.mqttClient) {
             await this.mqttClient.subscribe(topic);
             this.topicCallbacks.set(topic, callback);
-            console.log(`订阅主题 ${topic}`);
+            // console.log(`订阅主题 ${topic}`);
         }
     }
 
@@ -80,7 +80,7 @@ class MqttManager {
         if (this.mqttClient) {
             await this.mqttClient.unsubscribe(topic);
             this.topicCallbacks.delete(topic);
-            console.log(`取消订阅主题 ${topic}`);
+            // console.log(`取消订阅主题 ${topic}`);
         }
     }
 
@@ -95,36 +95,3 @@ class MqttManager {
 }
 
 export default new MqttManager();
-
-// const clientId = `web-${Math.random()}`;
-// const options = {
-//     clientId: clientId,
-//     username: "pupu-api",
-//     password: "QWEqwe123",
-//     clean: true
-// };
-
-// let mqttClient = mqtt.connect("ws://localhost:8083/mqtt", options);
-//
-// mqttClient.on('connect', () => {
-//     console.log('Connected to EMQ X Broker');
-//     mqttClient.subscribe('channels/aa', (err) => {
-//         // if (!err) {
-//         //     console.log('Subscribed to topic "aa"');
-//         // }
-//         console.log('Subscribed to topic "aa"');
-//     });
-// });
-// mqttClient.on('message', (topic, message) => {
-//     console.log('Received message:', message.toString());
-//     // 处理接收到的消息
-// });
-// mqttClient.on('error', (err) => {
-//     console.error('MQTT error:', err);
-// });
-// mqttClient.on('close', () => {
-//     console.log('Disconnected from EMQ X Broker');
-//     // 连接关闭后的处理逻辑
-// });
-
-// export default mqttClient;

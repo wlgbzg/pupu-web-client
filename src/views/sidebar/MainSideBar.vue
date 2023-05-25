@@ -5,7 +5,7 @@
             <div class="main-sidebar-hover"></div>
             <div class="main-sidebar-divider" v-if="item.type == -1"></div>
 
-            <el-popover placement="right-start" trigger="hover" :content="item.name"  v-if="item.type > -1">
+            <el-popover placement="right-start" trigger="hover" :content="item.name" v-if="item.type > -1">
                 <template #reference>
                     <div class="main-sidebar-button" :class="{'main-sidebar-button-active': isActive(item) }"
                          @click="itemClick(item)">
@@ -23,47 +23,53 @@
 <script setup lang="ts">
 import httpRequest from "@/utils/httpRequest";
 import router from "@/router";
-import {useGuildStore} from "@/stores/guild";
 import {useRoute} from "vue-router";
-import {reactive, ref, watch} from "vue";
+import {reactive, ref, watch, watchEffect} from "vue";
 import IconHome from "@/components/icons/sidebar/IconHome.vue";
 import IconDownload from "@/components/icons/sidebar/IconDownload.vue";
 import IconDiscovery from "@/components/icons/sidebar/IconDiscovery.vue";
 import IconAdd from "@/components/icons/sidebar/IconAdd.vue";
 import SideBar from "@/views/sidebar/SideBar.vue";
+import {useGuildStore} from "@/stores/guild";
 
 const guildStore = useGuildStore();
 const route = useRoute();
 const list = reactive([])
 
-list.push({
-    name: "主页", type: 0, url: "/home", icon: IconHome
-})
-list.push({
-    type: -1
-})
-for (const guild of guildStore.guildData.guilds) {
+const buildSidebar = () => {
+    list.splice(0);
     list.push({
-        name: guild.name,
-        type: 1,
-        url: "/channels/" + guild.id + "/" + guild.defaultChannelId,
-        guild: guild
+        name: "主页", type: 0, url: "/home", icon: IconHome
+    })
+    list.push({
+        type: -1
+    })
+    for (const guild of guildStore.guildInfo.guilds) {
+        list.push({
+            name: guild.name,
+            type: 1,
+            url: "/channels/" + guild.id + "/" + guild.defaultChannelId,
+            guild: guild
+        })
+    }
+    list.push({
+        name: "添加服务器", type: 2, icon: IconAdd
+    })
+    list.push({
+        name: "探索公开服务器", type: 0, url: "/discovery-guild/recommend", icon: IconDiscovery
+    })
+    list.push({
+        type: -1
+    })
+    list.push({
+        name: "下载App客户端", type: 2, icon: IconDownload
     })
 }
 
-list.push({
-    name: "添加服务器", type: 2, icon: IconAdd
-})
-list.push({
-    name: "探索公开服务器", type: 0, url: "/discovery-guild/recommend", icon: IconDiscovery
-})
-list.push({
-    type: -1
-})
-list.push({
-    name: "下载App客户端", type: 2, icon: IconDownload
-})
-
+// 当修改了服务器集合后, 要重新更新侧边栏
+watchEffect(() => {
+    buildSidebar()
+});
 
 const itemClick = (item: SideBar) => {
     if (item.type == 1) {
@@ -99,7 +105,8 @@ const loadGuildList = () => {
         url: "/api/v1/guild/list",
         method: "post"
     }).then(data => {
-        guildStore.updateGuilds(data.userGuilds, data.guilds);
+        guildStore.updateGuilds(data.guilds, data.userGuilds)
+        buildSidebar()
     }).catch(error => {
         console.error("请求失败1：", error);
     });

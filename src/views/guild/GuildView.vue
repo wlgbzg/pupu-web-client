@@ -24,14 +24,17 @@ import UserPanelView from "@/views/UserPanelView.vue";
 import {useRoute} from "vue-router";
 import IconArrowBack from "@/components/icons/IconArrowBack.vue";
 import router from "@/router";
-import {ref} from "vue";
-import {useGuildStore} from "@/stores/guild";
+import {ref, watchEffect} from "vue";
 import httpRequest from "@/utils/httpRequest";
 import {ElMessage} from "element-plus";
+import {useGuildStore} from "@/stores/guild";
 
 const guildStore = useGuildStore()
 const route = useRoute()
-const isInGuild = ref(guildStore.getGuild(route.params.guildId.toString()) != undefined)
+const isInGuild = ref(true);
+watchEffect(() => {
+    isInGuild.value = guildStore.exist(route.params.guildId.toString())
+});
 
 const joinGuild = () => {
     httpRequest.request({
@@ -42,8 +45,7 @@ const joinGuild = () => {
             message: '加入服务器成功',
             type: 'success',
         })
-        guildStore.appendGuild(data.userGuild, data.guild)
-        isInGuild.value = true
+        guildStore.addGuild(data.userGuild, data.guild)
     }).catch(error => {
         console.error("请求失败1：", error);
     });

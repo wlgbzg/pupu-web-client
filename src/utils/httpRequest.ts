@@ -1,6 +1,6 @@
 // @ts-nocheck
 import axios, {AxiosInstance, AxiosRequestConfig, AxiosResponse} from 'axios'
-import {useUserStore} from "@/stores/appConfig";
+import {useUserTokenStore} from "@/stores/appConfig";
 
 interface ResponseData<T> {
     code: number;
@@ -19,7 +19,7 @@ class HttpRequest {
         this.axiosInstance.interceptors.request.use(
             config => {
                 // 在请求发送之前做一些处理，比如添加请求头
-                const userStore = useUserStore()
+                const userStore = useUserTokenStore()
                 config.headers.id = userStore.userConfig.id;
                 config.headers.token = userStore.userConfig.token
                 // console.log("id", userStore.userConfig.id)

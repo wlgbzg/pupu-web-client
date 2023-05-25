@@ -14,7 +14,7 @@ export const useAppConfigStore = defineStore("appConfigStore", () => {
     persist: true
 });
 
-export const useUserStore = defineStore("userStore", () => {
+export const useUserTokenStore = defineStore("user-token", () => {
 
     const userConfig = reactive({
         id: '',

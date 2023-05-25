@@ -191,13 +191,13 @@ import QrcodeVue from "qrcode.vue";
 import {reactive, ref} from "vue";
 import type {FormInstance, FormRules} from "element-plus";
 import {ElMessage} from "element-plus";
-import {useAppConfigStore, useUserStore} from "@/stores/appConfig";
+import {useAppConfigStore, useUserTokenStore} from "@/stores/appConfig";
 import BgLogin from "@/components/background/BgLogin.vue";
 
 
 // 配置信息获取
 const appConfigStore = useAppConfigStore();
-const userStore = useUserStore()
+const userStore = useUserTokenStore()
 const loadLoginConfig = () => {
     httpRequest.request({
         url: "/api/v1/app/config",

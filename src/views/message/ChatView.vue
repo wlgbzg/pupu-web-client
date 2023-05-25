@@ -32,7 +32,7 @@
 import IconChannel from "@/components/icons/IconChannel.vue";
 import {nextTick, onMounted, ref, watch, watchEffect} from "vue";
 import {useRoute} from "vue-router";
-import {useGuildStore} from "@/stores/guild";
+import {useChannelStore} from "@/stores/channel";
 import IconHelp from "@/components/icons/IconHelp.vue";
 import IconMember from "@/components/icons/IconMember.vue";
 import IconMark from "@/components/icons/IconMark.vue";
@@ -48,13 +48,13 @@ import httpRequest from "@/utils/httpRequest";
 import type {Channel} from "@/types/beans";
 
 const route = useRoute();
-const guildStore = useGuildStore();
+const channelStore = useChannelStore();
 const channelId = route.params.channelId.toString();
 const channel = ref<Channel | undefined>(undefined);
 
 watchEffect(() => {
     if (route.params.channelId) {
-        channel.value = guildStore.getChannel(channelId);
+        channel.value = channelStore.getChannel(channelId);
     }
 });
 // 文本框

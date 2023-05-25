@@ -1,23 +1,26 @@
 import {reactive} from "vue";
 import {defineStore} from "pinia";
-import type {Channel, ChannelGroup, Guild, GuildChannelsDTO, UserGuild, UserGuildsDTO} from "@/types/beans";
+import {Guild, UserGuild} from "@/types/beans";
 
-export const useGuildStore = defineStore("guild", () => {
+export const useGuildStore = defineStore("guild2", () => {
 
-        // 我的服务器
-        const guildData = reactive<UserGuildsDTO>({userGuilds: [], guilds: []});
+        const guildInfo = reactive({
+            guilds: [],
+            userGuilds: []
+        })
 
-        const updateGuilds = (userGuilds: UserGuild[], guilds: Guild[]) => {
-            guildData.userGuilds = userGuilds;
-            guildData.guilds = guilds;
+        const updateGuilds = (guilds: Guild[], userGuilds: UserGuild[]) => {
+            guildInfo.guilds = guilds;
+            guildInfo.userGuilds = userGuilds;
+        }
+
+        const addGuild = (userGuild: UserGuild, guild: Guild) => {
+            guildInfo.guilds.push(guild)
+            guildInfo.userGuilds.push(userGuild)
         };
 
-        const appendGuild = (userGuild: UserGuild, guild: Guild) => {
-            guildData.userGuilds.push(userGuild);
-            guildData.guilds.push(guild);
-        };
         const getGuild = (guildId: string = ""): Guild | undefined => {
-            for (const guild of guildData.guilds) {
+            for (const guild of guildInfo.guilds) {
                 if (guild.id === guildId) {
                     return guild;
                 }
@@ -25,40 +28,15 @@ export const useGuildStore = defineStore("guild", () => {
             return undefined;
         };
 
-        // 当前服务器、当前频道
-        const channelData = reactive<GuildChannelsDTO>({channelGroups: [], channels: [], guild: null});
-
-        const updateChannels = (channelGroups: ChannelGroup[], channels: Channel[], guild: Guild) => {
-            channelData.channelGroups = channelGroups;
-            channelData.channels = channels;
-            channelData.guild = guild
-        };
-
-        const getChannels = (channelGroupId: string = ""): Channel[] => {
-            const res: Channel[] = [];
-            channelData.channels.forEach(channel => {
-                if (channel.channelGroupId === channelGroupId) {
-                    res.push(channel);
-                }
-                if (channelGroupId === "" && channel.channelGroupId === undefined) {
-                    res.push(channel);
-                }
-            });
-            return res;
-        };
-
-        const getChannel = (channelId: string): Channel | undefined => {
-            for (const channel of channelData.channels) {
-                if (channel.id === channelId) {
-                    return channel;
+        const exist = (guildId: string = "") => {
+            for (const guild of guildInfo.guilds) {
+                if (guild.id === guildId) {
+                    return true;
                 }
             }
-            return undefined;
-        };
-
-        return {guildData, appendGuild, updateGuilds, getGuild, channelData, updateChannels, getChannels, getChannel};
-    }, {
-        persist: true
+            return false
+        }
+        return {guildInfo, updateGuilds, addGuild, getGuild, exist};
     }
 );
 

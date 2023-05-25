@@ -18,14 +18,14 @@
 import httpRequest from "@/utils/httpRequest";
 import {nextTick, onMounted, reactive, ref} from "vue";
 import {onBeforeRouteLeave, onBeforeRouteUpdate, useRoute} from "vue-router";
-import {useGuildStore} from "@/stores/guild";
+import {useChannelStore} from "@/stores/channel";
 import type {Channel, Message} from "@/types/beans";
 import MessageView from "@/views/message/MessageView.vue";
 import {eventBus} from "@/utils/mitt";
 import MqttManager from "@/utils/mqtt";
 
 const route = useRoute();
-const guildStore = useGuildStore();
+const channelStore = useChannelStore();
 
 // 频道id
 const channelId = ref("");
@@ -113,7 +113,7 @@ onMounted(() => {
     // 获取channelId
     channelId.value = route.params.channelId.toString();
     // 获取channel对象
-    channel.value = guildStore.getChannel(channelId.value);
+    channel.value = channelStore.getChannel(channelId.value);
     // 获取消息记录
     load(channelId.value);
     // 在进入组件时触发订阅
