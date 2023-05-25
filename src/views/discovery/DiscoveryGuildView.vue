@@ -8,7 +8,7 @@
   </div>
 </template>
 <script lang='ts' setup>
-  import UserPanelView from '@/views/UserPanelView.vue'
+  import UserPanelView from '@/views/user/UserPanelView.vue'
   import DiscoveryClassifyView from '@/views/discovery/DiscoveryClassifyView.vue'
   import { useRoute } from 'vue-router'
 </script>

@@ -1,6 +1,6 @@
 // @ts-nocheck
 import { createRouter, createWebHistory } from 'vue-router'
-import LoginView from '@/views/LoginView.vue'
+import LoginView from '@/views/login/LoginView.vue'
 import MainView from '@/views/MainView.vue'
 import GuildView from '@/views/guild/GuildView.vue'
 import DiscoveryGuildView from '@/views/discovery/DiscoveryGuildView.vue'

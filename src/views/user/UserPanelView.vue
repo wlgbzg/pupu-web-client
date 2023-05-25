@@ -2,7 +2,7 @@
   <div class='user-panel-container'>
     <div class='user-info-container'>
       <div class='avatar'>
-        <img v-if='!userStore.user.avatar' alt='' height='28' src='@/assets/images/default-head.svg' width='28' />
+        <img v-if='!userStore.user.avatar' alt='' height='28' src='../../assets/images/default-head.svg' width='28' />
         <el-image v-if='userStore.user.avatar' :src='userStore.user.avatar' style='height: 28px; width: 28px' />
       </div>
       {{ userStore.user.name }}

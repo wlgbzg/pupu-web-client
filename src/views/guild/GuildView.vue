@@ -20,7 +20,7 @@
 </template>
 <script lang='ts' setup>
   import ChannelView from '@/views/guild/ChannelView.vue'
-  import UserPanelView from '@/views/UserPanelView.vue'
+  import UserPanelView from '@/views/user/UserPanelView.vue'
   import { useRoute } from 'vue-router'
   import IconArrowBack from '@/components/icons/guild/IconArrowBack.vue'
   import router from '@/router'
