@@ -10,9 +10,6 @@ dependencies:
   buffer:
     specifier: ^6.0.3
     version: registry.npmmirror.com/buffer@6.0.3
-  dexie:
-    specifier: ^3.2.3
-    version: registry.npmmirror.com/dexie@3.2.3
   element-plus:
     specifier: ^2.3.4
     version: registry.npmmirror.com/element-plus@2.3.4(vue@3.3.2)
@@ -1187,13 +1184,6 @@ packages:
     name: delayed-stream
     version: 1.0.0
     engines: {node: '>=0.4.0'}
-    dev: false
-
-  registry.npmmirror.com/dexie@3.2.3:
-    resolution: {integrity: sha512-iHayBd4UYryDCVUNa3PMsJMEnd8yjyh5p7a+RFeC8i8n476BC9wMhVvqiImq5zJZJf5Tuer+s4SSj+AA3x+ZbQ==, registry: http://registry.npm.taobao.org/, tarball: https://registry.npmmirror.com/dexie/-/dexie-3.2.3.tgz}
-    name: dexie
-    version: 3.2.3
-    engines: {node: '>=6.0'}
     dev: false
 
   registry.npmmirror.com/duplexify@4.1.2:
