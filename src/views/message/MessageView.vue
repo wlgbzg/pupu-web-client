@@ -35,7 +35,10 @@
   import { formatTimestamp } from '@/utils/time'
 
   const props = defineProps({
-    msg: Object as PropType<Message>
+    msg: {
+      type: Object as PropType<Message>,
+      required: true
+    }
   })
   const { msg } = toRefs(props)
 
