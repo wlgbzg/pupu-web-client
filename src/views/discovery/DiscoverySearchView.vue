@@ -56,13 +56,27 @@
 
       </div>
 
+      <div class='pagination'>
+
+        <el-pagination
+          @current-change="handleCurrentChange"
+          :current-page.sync="currentPage"
+          page-size="10"
+          layout="prev, pager, next, jumper"
+          next-text="下一页"
+          prev-text="上一页"
+          background
+          :total="result.totalElements">
+        </el-pagination>
+
+      </div>
+
     </div>
   </div>
 
 </template>
 <script lang='ts' setup>
   import IconArrow from '@/components/icons/discovery/IconLeft.vue'
-
   import IconClose from '@/components/icons/discovery/IconClose.vue'
   import IconSearch from '@/components/icons/discovery/IconSearch.vue'
   import { reactive, ref } from 'vue'
@@ -70,6 +84,7 @@
   import IconGuildFlag from '@/components/icons/discovery/IconGuildFlag.vue'
   import httpRequest from '@/utils/httpRequest'
   import { useDiscoveryGuildStore } from '@/stores/discoveryGuild'
+  import type { Guild } from '@/types/beans'
 
   const discoveryGuildStore = useDiscoveryGuildStore()
 
@@ -80,7 +95,7 @@
   const lastSearchKey = ref('')
 
   const result = reactive({
-    content: [],
+    content: [] as Guild[],
     totalElements: 0
   })
 
@@ -112,6 +127,13 @@
     }
   }
 
+  // 分页
+  const currentPage = ref(1);
+  const handleCurrentChange = (val) => {
+    discoveryGuildStore.searchParams.pageNum = val - 1
+    currentPage.value = val
+    search()
+  }
 
 </script>
 <style lang='less' scoped>
@@ -266,6 +288,57 @@
             }
           }
         }
+      }
+
+      .pagination {
+        margin-top: 20px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+
+        /*不可点击的*/
+        /deep/ .el-pagination.is-background .btn-prev:disabled,.page-wrapper .el-pagination.is-background .btn-next:disabled {
+          background-color: #dddddd;
+          color: #f9fafa;
+          border: 0;
+          cursor: not-allowed;
+        }
+        /deep/ .el-pagination button,.page-wrapper .el-pagination span:not([class*=suffix]){
+          min-width: 56px;
+        }
+        /*上下页可点击的样式*/
+        /deep/ .el-pagination.is-background .btn-next,.page-wrapper .el-pagination.is-background .btn-prev,.page-wrapper .el-pagination.is-background .el-pager li  {
+          background-color: #fff;
+          color: #333;
+          border: solid 1px #dcdcdc;
+          margin: 0 3px;
+        }
+        /*上下页hover效果*/
+        /deep/ .el-pagination.is-background .btn-next:hover,.page-wrapper .el-pagination.is-background .btn-prev:hover {
+          border-color: #e5242b;
+        }
+        /*页码样式*/
+        /deep/ .el-pagination {
+          color: #333333;
+          font-weight: normal;
+        }
+        /*当前页样式*/
+        /deep/ .el-pagination.is-background .el-pager li:not(.disabled).active {
+          background-color: #e5242b;
+          color: #fff;
+          border:0;
+        }
+        /*当前页hover样式*/
+        /deep/ .el-pagination.is-background .el-pager li:not(.disabled).active:hover {
+          color: #fff;
+          border:0;
+        }
+        /*不是当前页其他页码hover样式*/
+        /deep/ .el-pagination.is-background .el-pager li:not(.disabled):hover {
+          color: #333;
+          border-color: #e5242b;
+        }
+
       }
     }
   }

@@ -8,6 +8,7 @@ import ChatView from '@/views/message/ChatView.vue'
 import HomeView from '@/views/home/HomeView.vue'
 import DiscoveryRecommendView from '@/views/discovery/DiscoveryRecommendView.vue'
 import DiscoverySearchView from '@/views/discovery/DiscoverySearchView.vue'
+import TestView from '@/views/TestView.vue'
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
@@ -21,6 +22,11 @@ const router = createRouter({
           path: '/home',
           name: 'home',
           component: HomeView
+        },
+        {
+          path: '/test',
+          name: 'test',
+          component: TestView
         },
         {
           path: '/discovery-guild',
