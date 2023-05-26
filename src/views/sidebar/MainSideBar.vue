@@ -31,6 +31,7 @@
   import IconAdd from '@/components/icons/sidebar/IconAdd.vue'
   import SideBar from '@/views/sidebar/SideBar.vue'
   import { useGuildStore } from '@/stores/guild'
+  import { useDialogStore } from '@/stores/dialog'
 
   const guildStore = useGuildStore()
   const route = useRoute()
@@ -53,7 +54,7 @@
       })
     }
     list.push({
-      name: '添加服务器', type: 2, icon: IconAdd
+      name: '添加服务器', type: 3, icon: IconAdd
     })
     list.push({
       name: '探索公开服务器', type: 0, url: '/discovery-guild/recommend', icon: IconDiscovery
@@ -71,6 +72,7 @@
     buildSidebar()
   })
 
+  const dialogStore = useDialogStore()
   const itemClick = (item: SideBar) => {
     if (item.type == 1) {
       let guild = item.guild
@@ -80,6 +82,10 @@
 
     if (item.type == 0) {
       router.push(item.url)
+    }
+    if (item.type == 3) {
+      console.log('点击了add')
+      dialogStore.guildCreate.dialogVisible = true
     }
   }
 
