@@ -44,8 +44,8 @@ export interface Guild {
   // 可修改
   name: string;
   avatar: string;
-  intro: string;
   cover: string;
+  intro: string;
   defaultChannelId: string;
   memberCount: number;
 }

@@ -7,6 +7,7 @@ import DiscoveryGuildView from '@/views/discovery/DiscoveryGuildView.vue'
 import ChatView from '@/views/message/ChatView.vue'
 import HomeView from '@/views/home/HomeView.vue'
 import DiscoveryRecommendView from '@/views/discovery/DiscoveryRecommendView.vue'
+import DiscoverySearchView from '@/views/discovery/DiscoverySearchView.vue'
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
@@ -30,6 +31,11 @@ const router = createRouter({
               path: 'recommend',
               name: 'recommend',
               component: DiscoveryRecommendView
+            },
+            {
+              path: 'search',
+              name: 'search',
+              component: DiscoverySearchView
             }
           ]
         },

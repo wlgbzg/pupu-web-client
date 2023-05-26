@@ -25,7 +25,13 @@ export const useDiscoveryGuildStore = defineStore('discoveryGuild', () => {
       changeKey(discoveryKey.value)
     }
 
-    return { defaultDiscoveryKey, discoveryGuild, discoveryKey, currentDiscoveryGuild, changeKey, updateDiscoveryGuild }
+    const searchParams = reactive({
+      pageSize: 10,
+      pageNum: 0,
+      key: ""
+    })
+
+    return { defaultDiscoveryKey, discoveryGuild, discoveryKey, currentDiscoveryGuild, changeKey, updateDiscoveryGuild, searchParams}
   }
 )
 

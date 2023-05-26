@@ -18,7 +18,7 @@
   import IconStudy from '@/components/icons/discovery/IconStudy.vue'
   import IconTech from '@/components/icons/discovery/IconTech.vue'
   import IconFun from '@/components/icons/discovery/IconFun.vue'
-  import { useDiscoveryGuildStore } from '@/stores/discoverGuild'
+  import { useDiscoveryGuildStore } from '@/stores/discoveryGuild'
 
   const discoveryGuildStore = useDiscoveryGuildStore()
 
