@@ -84,7 +84,6 @@
       router.push(item.url)
     }
     if (item.type == 3) {
-      console.log('点击了add')
       dialogStore.guildCreate.dialogVisible = true
     }
   }

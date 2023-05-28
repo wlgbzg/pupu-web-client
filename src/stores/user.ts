@@ -9,5 +9,7 @@ export const useUserProfileStore = defineStore('user-profile', () => {
       Object.assign(user, _user)
     }
     return { user, updateUser }
+  }, {
+    persist: true
   }
 )
