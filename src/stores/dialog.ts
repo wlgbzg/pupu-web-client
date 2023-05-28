@@ -6,7 +6,7 @@ export const useDialogStore = defineStore('dialog', () => {
 
 
   const guildCreate = ref({
-    dialogVisible : false
+    dialogVisible : false,
   })
 
   return { guildCreate }

@@ -84,9 +84,13 @@
   import { useUserProfileStore } from '@/stores/user'
   import IconFileUpload from '@/components/icons/guild/IconFileUpload.vue'
   import IconCreateGuild from '@/components/icons/guild/IconCreateGuild.vue'
+  import httpRequest from '@/utils/httpRequest'
+  import { ElMessage } from 'element-plus'
+  import { useGuildStore } from '@/stores/guild'
 
   const dialogStore = useDialogStore()
   const userProfileStore = useUserProfileStore()
+  const guildStore = useGuildStore()
   const handleClose = (done) => {
     done()
     reset()
@@ -140,7 +144,25 @@
   }
 
   const guildCreate = () => {
+    httpRequest.request({
+      url: `/api/v1/guild/create`,
+      method: 'post',
+      data: {
+        name: info.guildName,
+        avatar: info.imagePath,
+      }
+    }).then(data => {
+      ElMessage({
+        message: '社区创建成功',
+        type: 'success'
+      })
+      guildStore.addGuild(data.userGuild, data.guild)
+      reset()
+      dialogStore.guildCreate.dialogVisible = false
 
+    }).catch(error => {
+      console.error('请求失败1：', error)
+    })
   }
 
   const joinGuild = () => {

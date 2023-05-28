@@ -1,5 +1,8 @@
 <template>
-  <div class='main-sidebar-container h-screen'>
+  <div class='main-sidebar-container'>
+
+    <div class='space' style='padding-top: 10px'></div>
+
     <div v-for='item in list' class='main-sidebar-box'>
       <div v-if='isActive(item)' class='main-sidebar-active'></div>
       <div class='main-sidebar-hover'></div>
@@ -123,18 +126,26 @@
   @import "@/assets/less/base";
 
   .main-sidebar-divider {
+    margin: 4px 0;
     width: 50%;
     height: 2px;
     background-color: @sidebar-btn-background;
     border-radius: 1em;
   }
+  ::-webkit-scrollbar {
+
+    display: none; /* Chrome Safari */
+
+  }
 
   .main-sidebar-container {
-    padding-top: 10px;
     background-color: @sidebar-background;
     display: flex;
     flex-direction: column;
     align-items: center;
+    overflow-y: auto;
+    height: 100vh;
+
 
     .main-sidebar-box {
       width: 100%;
@@ -174,7 +185,7 @@
         width: 50px;
         height: 50px;
         display: flex;
-        margin: 8px 0;
+        margin: 4px 0;
         justify-content: center;
         align-items: center;
         border-radius: 2em;
