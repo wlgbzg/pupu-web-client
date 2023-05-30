@@ -171,7 +171,7 @@
 
 </script>
 
-<style>
+<style lang='less' scoped>
     .guild-create-dialog-container {
         user-select: none;
 
