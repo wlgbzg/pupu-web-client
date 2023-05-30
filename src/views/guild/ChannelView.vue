@@ -87,12 +87,12 @@
         flex-direction: column;
         justify-content: center;
         align-items: center;
+        margin-bottom: 16px;
 
         .channel-group-title {
           width: 240px;
           height: 24px;
           font-size: 12px;
-          padding-top: 16px;
           cursor: pointer;
           font-weight: bold;
           display: flex;
