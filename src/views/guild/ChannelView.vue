@@ -10,18 +10,9 @@
     <!--   频道   -->
     <div class='channel-container'>
 
-      <!--   未分组频道   -->
-      <div class='channel-group'>
-        <div v-for='item in channelStore.getChannels()' :class="item.id === route.params.channelId ? 'channel-item-selected' :  ''"
-             class='channel-item' @click='router.push({path: `/channels/${route.params.guildId}/${item.id}`})'>
-          <span class='channel-item-left'><IconChannel class='channel-icon-default' /><span class='channel-name'>{{ item.name }}</span></span>
-          <span class='channel-item-right'><span class='channel-item-btn'><IconPlusUser /></span><span class='channel-item-btn'><IconSettings /></span></span>
-        </div>
-      </div>
-
       <!--   分组频道   -->
       <div v-for='group in channelStore.channelData.channelGroups' class='channel-group'>
-        <div class='channel-group-title'>
+        <div class='channel-group-title' v-if='group.id'>
           <span class='channel-group-left'><IconArrowDown /><span class='channel-group-name'>{{ group['name'] }}</span></span>
           <span class='channel-group-right'><IconPlus /></span>
         </div>
@@ -65,6 +56,7 @@
   @import "@/assets/less/base";
 
   .guild-channel-container {
+    user-select: none;
     width: 240px;
     min-width: 240px;
     height: 100%;
