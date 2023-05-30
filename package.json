@@ -25,6 +25,7 @@
     "prettier": "^2.8.8",
     "qrcode.vue": "^3.4.0",
     "vue": "^3.3.2",
+    "vue-draggable-next": "^2.1.1",
     "vue-router": "^4.2.0"
   },
   "devDependencies": {

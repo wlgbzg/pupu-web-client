@@ -3,7 +3,7 @@
 
     <!--   头部   -->
     <div class='head-container'>
-      <span class='channel-info'>{{ channelStore.channelData.guild?.name }}</span>
+      <span class='channel-info'>{{ channelStore.channelInfo.guild?.name }}</span>
       <span class='head-btn'><el-icon size='12'><ArrowDownBold /></el-icon></span>
     </div>
 
@@ -11,7 +11,7 @@
     <div class='channel-container'>
 
       <!--   分组频道   -->
-      <div v-for='group in channelStore.channelData.channelGroups' class='channel-group'>
+      <div v-for='group in channelStore.channelInfo.channelGroups' class='channel-group'>
         <div class='channel-group-title' v-if='group.id'>
           <span class='channel-group-left'><IconArrowDown /><span class='channel-group-name'>{{ group['name'] }}</span></span>
           <span class='channel-group-right'><IconPlus /></span>

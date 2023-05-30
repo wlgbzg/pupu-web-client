@@ -8,9 +8,13 @@ export const useChannelStore = defineStore('channel', () => {
     const channelInfo = reactive<GuildChannelsDTO>({ channelGroups: [], channels: [], guild: null })
 
     const updateChannels = (channelGroups: ChannelGroup[], channels: Channel[], guild: Guild) => {
+      channelInfo.channels = channels
+
       channelInfo.channelGroups = channelGroups
       channelInfo.channelGroups.unshift( {id: '', guildId: '', name: '未分组'})
-      channelInfo.channels = channels
+      channelGroups.forEach((channelGroup, index) => {
+        channelGroup.channels = getChannels(channelGroup.id)
+      });
       channelInfo.guild = guild
     }
 
@@ -36,7 +40,7 @@ export const useChannelStore = defineStore('channel', () => {
       return undefined
     }
 
-    return { channelData: channelInfo, updateChannels, getChannels, getChannel }
+    return {  channelInfo, updateChannels, getChannels, getChannel }
   }
 )
 
