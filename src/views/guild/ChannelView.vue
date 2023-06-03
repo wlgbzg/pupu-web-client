@@ -44,6 +44,7 @@
   import { useChannelStore } from '@/stores/channel'
   import ContextMenu from '@imengyu/vue3-context-menu'
   import { useDialogStore } from '@/stores/dialog'
+  import { ElMessage, ElMessageBox } from 'element-plus'
 
   const route = useRoute()
   const channelStore = useChannelStore()
@@ -85,6 +86,41 @@
     })
   }
 
+
+  const deleteChannel = (channelId) => {
+
+    ElMessageBox.confirm(
+      '你确认删除这个频道吗？这个操作是不能撤销的！',
+      '删除频道',
+      {
+        confirmButtonText: '删除',
+        cancelButtonText: '取消',
+        type: 'error',
+        center: true
+      }
+    )
+      .then(() => {
+        httpRequest.request({
+          url: `/api/v1/channel/delete/${channelId}`,
+          method: 'post'
+        }).then(data => {
+          const index = channelStore.channelInfo.channels.findIndex(item => item.id === channelId) // 查找具有id为1的元素的索引
+          if (index !== -1) {
+            channelStore.channelInfo.channels.splice(index, 1) // 从数组中删除该元素
+          }
+          ElMessage({
+            type: 'success',
+            message: '频道删除成功'
+          })
+        }).catch(error => {
+          console.error('请求失败1：', error)
+        })
+      })
+      .catch(() => {
+      })
+
+  }
+
   // 空白区域右键菜单
   const freeContextMenu = (e) => {
     ContextMenu.showContextMenu({
@@ -115,28 +151,31 @@
       x: e.x,
       y: e.y,
       items: [
-        {
-          label: '邀请其他人',
-          divided: true,
-          onClick: () => {
-          }
-        },
-        {
-          label: '复制链接',
-          onClick: () => {
-          }
-        },
+
         {
           label: '移动分类',
           children: channelStore.channelInfo.channelGroups.map((item) => {
             return {
-              label: item.name ? item.name : '默认分组',
+              label: item.name,
               onClick: () => {
                 changeChannelGroup(item.id, channelId)
               }
             }
           })
+        },
+        {
+          label: '复制链接',
+          onClick: () => {
+          },
+          divided: true
+        },
+        {
+          label: '删除频道',
+          onClick: () => {
+            deleteChannel(channelId)
+          }
         }
+
 
       ]
     })

@@ -11,7 +11,7 @@ export const useChannelStore = defineStore('channel', () => {
       channelInfo.channels = channels
 
       channelInfo.channelGroups = channelGroups
-      channelInfo.channelGroups.unshift( {id: '', guildId: '', name: ''})
+      channelInfo.channelGroups.unshift( {id: '', guildId: '', name: '未分组'})
       channelInfo.guild = guild
     }
 
