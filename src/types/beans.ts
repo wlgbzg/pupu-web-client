@@ -76,7 +76,4 @@ export interface ChannelGroup {
 
   // 可修改
   name: string; // 名称
-
-  // 本地额外
-  channels: Channel[];
 }

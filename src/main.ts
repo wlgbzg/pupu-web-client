@@ -11,6 +11,11 @@ import * as ElementPlusIconsVue from '@element-plus/icons-vue'
 import piniaPluginPersistedstate from 'pinia-plugin-persistedstate'
 import { Buffer } from 'buffer'
 
+//右键菜单插件
+import '@imengyu/vue3-context-menu/lib/vue3-context-menu.css'
+import ContextMenu from '@imengyu/vue3-context-menu'
+
+
 const app = createApp(App)
 //创建store实例
 const store = createPinia()
@@ -21,6 +26,8 @@ app.use(store)
 app.use(router)
 //使用UI插件
 app.use(ElementPlus)
+//使用右键菜单
+app.use(ContextMenu)
 
 //注册所有图标
 for (const [key, component] of Object.entries(ElementPlusIconsVue)) {

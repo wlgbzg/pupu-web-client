@@ -11,10 +11,7 @@ export const useChannelStore = defineStore('channel', () => {
       channelInfo.channels = channels
 
       channelInfo.channelGroups = channelGroups
-      channelInfo.channelGroups.unshift( {id: '', guildId: '', name: '未分组'})
-      channelGroups.forEach((channelGroup, index) => {
-        channelGroup.channels = getChannels(channelGroup.id)
-      });
+      channelInfo.channelGroups.unshift( {id: '', guildId: '', name: ''})
       channelInfo.guild = guild
     }
 
@@ -28,6 +25,9 @@ export const useChannelStore = defineStore('channel', () => {
           res.push(channel)
         }
       })
+      res.sort = (a,b) => {
+        return a.name.localeCompare(b.name)
+      }
       return res
     }
 

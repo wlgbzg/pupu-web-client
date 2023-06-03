@@ -5,9 +5,23 @@ import { defineStore } from 'pinia'
 export const useDialogStore = defineStore('dialog', () => {
 
 
-  const guildCreate = ref({
+  const guildCreate = reactive({
     dialogVisible : false,
   })
 
-  return { guildCreate }
+  const channelCreate = reactive({
+    dialogVisible : false,
+    channelGroup: '',
+  })
+
+  const channelGroupCreate = reactive({
+    dialogVisible : false,
+  })
+
+  const openChannelCreate = (channelGroup = '') => {
+    channelCreate.dialogVisible = true
+    channelCreate.channelGroup = channelGroup
+  }
+
+  return { guildCreate, channelCreate, openChannelCreate, channelGroupCreate}
 })

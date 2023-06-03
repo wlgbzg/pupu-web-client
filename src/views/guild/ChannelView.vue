@@ -1,8 +1,8 @@
 <template>
-  <div class='guild-channel-container'>
+  <div class='guild-channel-container' @contextmenu.stop.prevent='freeContextMenu'>
 
     <!--   头部   -->
-    <div class='head-container'>
+    <div class='head-container' @contextmenu.stop.prevent='headContextMenu'>
       <span class='channel-info'>{{ channelStore.channelInfo.guild?.name }}</span>
       <span class='head-btn'><el-icon size='12'><ArrowDownBold /></el-icon></span>
     </div>
@@ -14,16 +14,22 @@
       <div v-for='group in channelStore.channelInfo.channelGroups' class='channel-group'>
         <div class='channel-group-title' v-if='group.id'>
           <span class='channel-group-left'><IconArrowDown /><span class='channel-group-name'>{{ group['name'] }}</span></span>
-          <span class='channel-group-right'><IconPlus /></span>
+          <span class='channel-group-right'><IconPlus @click='openChannelCreateDialog(group.id)' /></span>
         </div>
 
         <div v-for='item in channelStore.getChannels(group.id)' :class="item.id === route.params.channelId ? 'channel-item-selected' :  ''"
+             @contextmenu.stop.prevent='channelContextMenu($event, `${item.id}`)'
              class='channel-item' @click='router.push({path: `/channels/${route.params.guildId}/${item.id}`})'>
           <span class='channel-item-left'><IconChannel class='channel-icon-default' /><span>{{ item.name }}</span></span>
           <span class='channel-item-right'><span class='channel-item-btn'><IconPlusUser /></span><span class='channel-item-btn'><IconSettings /></span></span>
         </div>
       </div>
     </div>
+
+    <div class='free-container'>
+    </div>
+
+
   </div>
 </template>
 <script lang='ts' setup>
@@ -36,9 +42,12 @@
   import { useRoute } from 'vue-router'
   import httpRequest from '@/utils/httpRequest'
   import { useChannelStore } from '@/stores/channel'
+  import ContextMenu from '@imengyu/vue3-context-menu'
+  import { useDialogStore } from '@/stores/dialog'
 
   const route = useRoute()
   const channelStore = useChannelStore()
+  const dialogStore = useDialogStore()
   const load = () => {
     httpRequest.request({
       url: '/api/v1/channel/list/' + route.params.guildId,
@@ -51,9 +60,120 @@
   }
   load()
 
+  const openChannelCreateDialog = (channelGroup = '') => {
+    dialogStore.openChannelCreate(channelGroup)
+  }
+  const openChannelGroupCreateDialog = () => {
+    dialogStore.channelGroupCreate.dialogVisible = true
+  }
+
+
+  const changeChannelGroup = (channelGroupId, channelId) => {
+    console.log('切换分组>', channelGroupId, channelId)
+
+    httpRequest.request({
+      url: '/api/v1/channel/setChannelGroup',
+      method: 'post',
+      data: {
+        channelId: channelId,
+        channelGroupId: channelGroupId
+      }
+    }).then(data => {
+      channelStore.getChannel(channelId)!.channelGroupId = channelGroupId
+    }).catch(error => {
+      console.error('请求失败1：', error)
+    })
+  }
+
+  // 空白区域右键菜单
+  const freeContextMenu = (e) => {
+    ContextMenu.showContextMenu({
+      theme: 'default',
+      x: e.x,
+      y: e.y,
+      items: [
+        {
+          label: '创建频道',
+          onClick: () => {
+            openChannelCreateDialog()
+          }
+        },
+        {
+          label: '创建类别',
+          onClick: () => {
+            openChannelGroupCreateDialog()
+          }
+        }
+      ]
+    })
+  }
+
+  // 频道区域右键菜单
+  const channelContextMenu = (e, channelId) => {
+    ContextMenu.showContextMenu({
+      theme: 'default',
+      x: e.x,
+      y: e.y,
+      items: [
+        {
+          label: '邀请其他人',
+          divided: true,
+          onClick: () => {
+          }
+        },
+        {
+          label: '复制链接',
+          onClick: () => {
+          }
+        },
+        {
+          label: '移动分类',
+          children: channelStore.channelInfo.channelGroups.map((item) => {
+            return {
+              label: item.name ? item.name : '默认分组',
+              onClick: () => {
+                changeChannelGroup(item.id, channelId)
+              }
+            }
+          })
+        }
+
+      ]
+    })
+  }
+
+  const headContextMenu = (e) => {
+    ContextMenu.showContextMenu({
+      x: e.x,
+      y: e.y,
+      items: [
+        {
+          label: '创建1频道',
+          onClick: () => {
+          }
+        },
+        {
+          label: 'A submenu',
+          children: [
+            { label: 'Item1' },
+            { label: 'Item2' },
+            { label: 'Item3' }
+          ]
+        }
+      ]
+    })
+  }
+
 </script>
 <style lang='less' scoped>
   @import "@/assets/less/base";
+
+
+  .ak00 {
+    background-color: red !important;
+    color: red;
+    width: 200px;
+  }
 
   .guild-channel-container {
     user-select: none;
@@ -62,8 +182,11 @@
     height: 100%;
     background-color: @channel-background;
     color: @channel-font-color;
+    display: flex;
+    flex-direction: column;
 
     .head-container {
+      width: 200px;
       height: 48px;
       border-bottom: 1px solid rgba(1, 1, 1, 0.2);
       color: white;
@@ -77,6 +200,7 @@
     .head-container:hover {
       background-color: @channel-head-hover;
       cursor: pointer;
+      z-index: 2;
     }
 
     .channel-container {
@@ -175,6 +299,10 @@
 
       }
 
+    }
+
+    .free-container {
+      flex: 1;
     }
 
 
