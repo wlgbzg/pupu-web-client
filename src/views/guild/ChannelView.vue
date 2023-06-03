@@ -12,12 +12,12 @@
 
       <!--   分组频道   -->
       <div v-for='group in channelStore.channelInfo.channelGroups' class='channel-group'>
-        <div class='channel-group-title' v-if='group.id'>
-          <span class='channel-group-left'><IconArrowDown /><span class='channel-group-name'>{{ group['name'] }}</span></span>
-          <span class='channel-group-right'><IconPlus @click='openChannelCreateDialog(group.id)' /></span>
+        <div class='channel-group-title' v-if='group.id' @click='expand(`${group.id}`)' @contextmenu.stop.prevent='groupContextMenu($event, `${group.id}`)'>
+          <span class='channel-group-left'><IconArrowDown :class="expandHide[group.id] ? 'expandHide' :  ''" /><span class='channel-group-name'>{{ group['name'] }}</span></span>
+          <span class='channel-group-right'><IconPlus @click.stop.prevent='openChannelCreateDialog(group.id)' /></span>
         </div>
 
-        <div v-for='item in channelStore.getChannels(group.id)' :class="item.id === route.params.channelId ? 'channel-item-selected' :  ''"
+        <div v-for='item in channelStore.getChannels(group.id)' :class="item.id === route.params.channelId ? 'channel-item-selected' :  ''" v-if='!expandHide[group.id]'
              @contextmenu.stop.prevent='channelContextMenu($event, `${item.id}`)'
              class='channel-item' @click='router.push({path: `/channels/${route.params.guildId}/${item.id}`})'>
           <span class='channel-item-left'><IconChannel class='channel-icon-default' /><span>{{ item.name }}</span></span>
@@ -28,7 +28,6 @@
 
     <div class='free-container'>
     </div>
-
 
   </div>
 </template>
@@ -45,10 +44,13 @@
   import ContextMenu from '@imengyu/vue3-context-menu'
   import { useDialogStore } from '@/stores/dialog'
   import { ElMessage, ElMessageBox } from 'element-plus'
+  import { reactive, watch } from 'vue'
+  import { useGuildStore } from '@/stores/guild'
 
   const route = useRoute()
   const channelStore = useChannelStore()
   const dialogStore = useDialogStore()
+  const guildStore = useGuildStore()
   const load = () => {
     httpRequest.request({
       url: '/api/v1/channel/list/' + route.params.guildId,
@@ -61,6 +63,12 @@
   }
   load()
 
+  const expandHide = reactive({})
+
+  const expand = (groupId) => {
+    expandHide[groupId] = !expandHide[groupId]
+  }
+
   const openChannelCreateDialog = (channelGroup = '') => {
     dialogStore.openChannelCreate(channelGroup)
   }
@@ -69,8 +77,63 @@
   }
 
 
+  watch(() => channelStore.channelInfo.channels, () => {
+    const id = route.params.channelId.toString()
+    if (channelStore.channelInfo.channels.length > 0) {
+
+      if (!channelStore.getChannel(id)) {
+        router.replace({ path: `/channels/${route.params.guildId.toString()}/${channelStore.channelInfo.channels[0].id}` })
+      }
+    }
+  })
+
+  const deleteChannelGroup = (groupId) => {
+
+    httpRequest.request({
+      url: `/api/v1/channel/deleteChannelGroup/${groupId}`,
+      method: 'post',
+    }).then(data => {
+      channelStore.deleteChannelGroup(groupId)
+    }).catch(error => {
+      console.error('请求失败1：', error)
+
+    })
+
+  }
+
+  const groupContextMenu = (e, groupId) => {
+    ContextMenu.showContextMenu({
+      theme: 'default',
+      x: e.x,
+      y: e.y,
+      items: [
+        {
+          label: '删除类别',
+          onClick: () => {
+
+            ElMessageBox.confirm(
+              '你确认删除这个类别吗？这个操作是不能撤销的！',
+              '删除类别',
+              {
+                confirmButtonText: '删除',
+                cancelButtonText: '取消',
+                type: 'error',
+                center: true
+              }
+            )
+              .then(() => {
+                deleteChannelGroup(groupId)
+              }).catch(error => {
+
+            })
+
+          }
+        }
+      ]
+    })
+  }
+
   const changeChannelGroup = (channelGroupId, channelId) => {
-    console.log('切换分组>', channelGroupId, channelId)
 
     httpRequest.request({
       url: '/api/v1/channel/setChannelGroup',
@@ -86,7 +149,23 @@
     })
   }
 
-
+  const setDefaultChannel = (channelId) => {
+    httpRequest.request({
+      url: `/api/v1/guild/setDefaultChannel/${route.params.guildId}/${channelId}`,
+      method: 'post'
+    }).then(data => {
+      const g = guildStore.getGuild(route.params.guildId.toString())
+      if (g) {
+        g.defaultChannelId = data.defaultChannelId
+      }
+      ElMessage({
+        type: 'success',
+        message: '设置默认频道成功'
+      })
+    }).catch(error => {
+      console.error('请求失败1：', error)
+    })
+  }
   const deleteChannel = (channelId) => {
 
     ElMessageBox.confirm(
@@ -112,6 +191,10 @@
             type: 'success',
             message: '频道删除成功'
           })
+          // 如果删除的是当前频道, 那么随便找个频道切换一下
+          if (route.params.channelId === channelId) {
+            router.replace({ path: `/channels/${route.params.guildId}/${channelStore.channelInfo.channels[0].id}` })
+          }
         }).catch(error => {
           console.error('请求失败1：', error)
         })
@@ -164,6 +247,12 @@
           })
         },
         {
+          label: '设为默认频道',
+          onClick: () => {
+            setDefaultChannel(channelId)
+          }
+        },
+        {
           label: '复制链接',
           onClick: () => {
           },
@@ -207,6 +296,10 @@
 <style lang='less' scoped>
   @import "@/assets/less/base";
 
+
+  .expandHide {
+    transform: rotate(-90deg);
+  }
 
   .ak00 {
     background-color: red !important;
@@ -263,6 +356,7 @@
           align-items: center;
 
           .channel-group-left {
+            flex: 1;
             display: flex;
             align-items: center;
             margin-left: 5px;

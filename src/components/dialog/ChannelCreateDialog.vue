@@ -109,7 +109,6 @@
   })
 
   //
-  //
   const channelCreate = () => {
     httpRequest.request({
       url: `/api/v1/channel/create`,
@@ -128,10 +127,6 @@
       })
 
       channelStore.channelInfo.channels.push(data)
-      // TODO 添加到本地内存
-      console.log('创建频道', data)
-
-      // guildStore.addGuild(data.userGuild, data.guild)
       reset()
       dialogStore.channelCreate.dialogVisible = false
     }).catch(error => {

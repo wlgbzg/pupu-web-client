@@ -40,7 +40,20 @@ export const useChannelStore = defineStore('channel', () => {
       return undefined
     }
 
-    return {  channelInfo, updateChannels, getChannels, getChannel }
+    const deleteChannelGroup = (groupId) => {
+      const index = channelInfo.channelGroups.findIndex(item => item.id === groupId)
+      if (index !== -1) {
+        channelInfo.channelGroups.splice(index, 1) // 从数组中删除该元素
+      }
+      channelInfo.channels.forEach(channel => {
+        if (channel.channelGroupId === groupId) {
+          channel.channelGroupId = ''
+        }
+      })
+
+    }
+
+    return {  channelInfo, updateChannels, getChannels, getChannel, deleteChannelGroup }
   }
 )
 
