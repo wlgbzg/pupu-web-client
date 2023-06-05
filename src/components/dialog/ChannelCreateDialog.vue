@@ -60,6 +60,7 @@
   import { ElMessage } from 'element-plus'
   import { useRoute } from 'vue-router'
   import { useChannelStore } from '@/stores/channel'
+  import router from '@/router'
 
   const route = useRoute()
   const dialogStore = useDialogStore()
@@ -128,6 +129,8 @@
 
       channelStore.channelInfo.channels.push(data)
       reset()
+      // 创建好以后直接切换到这个频道
+      router.push({ path: `/channels/${route.params.guildId.toString()}/${data.id}` })
       dialogStore.channelCreate.dialogVisible = false
     }).catch(error => {
       console.error('请求失败1：', error)

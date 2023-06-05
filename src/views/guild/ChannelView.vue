@@ -83,9 +83,11 @@
   watch(() => channelStore.channelInfo.channels, () => {
     if (route.params.channelId) {
       if (channelStore.channelInfo.channels.length > 0) {
-        // if (!channelStore.getChannel(route.params.channelId.toString())) {
+
+        // 如果即将切换的频道不存在, 才切换
+        if (!channelStore.getChannel(route.params.channelId.toString())) {
           router.replace({ path: `/channels/${route.params.guildId.toString()}/${channelStore.channelInfo.channels[0].id}` })
-        // }
+        }
       } else {
         router.replace({ path: `/channels/${route.params.guildId.toString()}` })
       }
@@ -101,7 +103,6 @@
       channelStore.deleteChannelGroup(groupId)
     }).catch(error => {
       console.error('请求失败1：', error)
-
     })
   }
 
