@@ -14,7 +14,7 @@
       </div>
 
       <div class='channel-private' @click='changePrivate'>
-        <div class='settings'>
+        <div class='setting-page-container'>
           <h3 class='setting-name'>
             <IconLock />
             私密类别
@@ -219,7 +219,7 @@
       flex-direction: column;
       cursor: pointer;
 
-      .settings {
+      .setting-page-container {
         display: flex;
         flex-direction: row;
         justify-content: space-between;

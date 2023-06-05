@@ -29,9 +29,11 @@
     <div class='free-container'>
     </div>
 
+
   </div>
 </template>
 <script lang='ts' setup>
+  import ChannelGroupEditDrawer from '@/components/drawer/ChannelGroupEditDrawer.vue'
   import IconArrowDown from '@/components/icons/channel/IconArrowDown.vue'
   import IconChannel from '@/components/icons/channel/IconChannel.vue'
   import IconSettings from '@/components/icons/channel/IconSettings.vue'
@@ -44,13 +46,15 @@
   import ContextMenu from '@imengyu/vue3-context-menu'
   import { useDialogStore } from '@/stores/dialog'
   import { ElMessage, ElMessageBox } from 'element-plus'
-  import { reactive, watch } from 'vue'
+  import { createVNode, reactive, ref, render, watch } from 'vue'
   import { useGuildStore } from '@/stores/guild'
+  import Settings from '@/components/settings/settings'
 
   const route = useRoute()
   const channelStore = useChannelStore()
   const dialogStore = useDialogStore()
   const guildStore = useGuildStore()
+
   const load = () => {
     httpRequest.request({
       url: '/api/v1/channel/list/' + route.params.guildId,
@@ -98,7 +102,6 @@
       console.error('请求失败1：', error)
 
     })
-
   }
 
   const groupContextMenu = (e, groupId) => {
@@ -107,6 +110,12 @@
       x: e.x,
       y: e.y,
       items: [
+        {
+          label: '编辑类别',
+          onClick: () => {
+            Settings({ channelGroupId: groupId })
+          }
+        },
         {
           label: '删除类别',
           onClick: () => {
@@ -301,10 +310,8 @@
     transform: rotate(-90deg);
   }
 
-  .ak00 {
-    background-color: red !important;
-    color: red;
-    width: 200px;
+  ::-webkit-scrollbar {
+    display: none; /* Chrome Safari */
   }
 
   .guild-channel-container {
@@ -336,6 +343,7 @@
     }
 
     .channel-container {
+      overflow-y: auto;
       padding-top: 12px;
 
       .channel-group {
