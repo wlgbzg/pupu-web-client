@@ -1,6 +1,6 @@
 <template>
   <!-- 聊天界面 -->
-  <div class='chat-container '>
+  <div class='no-channel-container '>
 
     <!-- 头部 -->
     <div class='head-container'>
@@ -127,7 +127,7 @@
 <style lang='less' scoped>
   @import "@/assets/less/base.less";
 
-  .chat-container {
+  .no-channel-container {
     color: white;
     display: flex;
     height: 100vh;

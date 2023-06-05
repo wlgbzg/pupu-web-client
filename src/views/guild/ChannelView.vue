@@ -46,7 +46,7 @@
   import ContextMenu from '@imengyu/vue3-context-menu'
   import { useDialogStore } from '@/stores/dialog'
   import { ElMessage, ElMessageBox } from 'element-plus'
-  import { createVNode, reactive, ref, render, watch } from 'vue'
+  import { reactive, watch } from 'vue'
   import { useGuildStore } from '@/stores/guild'
   import Settings from '@/components/settings/settings'
 
@@ -80,13 +80,14 @@
     dialogStore.channelGroupCreate.dialogVisible = true
   }
 
-
   watch(() => channelStore.channelInfo.channels, () => {
-    const id = route.params.channelId.toString()
-    if (channelStore.channelInfo.channels.length > 0) {
-
-      if (!channelStore.getChannel(id)) {
-        router.replace({ path: `/channels/${route.params.guildId.toString()}/${channelStore.channelInfo.channels[0].id}` })
+    if (route.params.channelId) {
+      if (channelStore.channelInfo.channels.length > 0) {
+        // if (!channelStore.getChannel(route.params.channelId.toString())) {
+          router.replace({ path: `/channels/${route.params.guildId.toString()}/${channelStore.channelInfo.channels[0].id}` })
+        // }
+      } else {
+        router.replace({ path: `/channels/${route.params.guildId.toString()}` })
       }
     }
   })
@@ -95,7 +96,7 @@
 
     httpRequest.request({
       url: `/api/v1/channel/deleteChannelGroup/${groupId}`,
-      method: 'post',
+      method: 'post'
     }).then(data => {
       channelStore.deleteChannelGroup(groupId)
     }).catch(error => {
@@ -203,7 +204,11 @@
           })
           // 如果删除的是当前频道, 那么随便找个频道切换一下
           if (route.params.channelId === channelId) {
-            router.replace({ path: `/channels/${route.params.guildId}/${channelStore.channelInfo.channels[0].id}` })
+            if (channelStore.channelInfo.channels.length > 0) {
+              router.replace({ path: `/channels/${route.params.guildId}/${channelStore.channelInfo.channels[0].id}` })
+            } else {
+              router.replace({ path: `/channels/${route.params.guildId}` })
+            }
           }
         }).catch(error => {
           console.error('请求失败1：', error)

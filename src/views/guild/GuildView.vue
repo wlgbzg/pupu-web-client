@@ -14,7 +14,10 @@
         <ChannelView class='flex-1' />
         <UserPanelView />
       </div>
-      <RouterView :key='useRoute().path' class='flex-1' />
+      <div  class='flex-1'>
+        <RouterView :key='useRoute().path' v-if='route.params.channelId'/>
+        <NoChannelView v-if='!route.params.channelId'/>
+      </div>
     </div>
   </div>
 </template>
@@ -28,6 +31,7 @@
   import httpRequest from '@/utils/httpRequest'
   import { ElMessage } from 'element-plus'
   import { useGuildStore } from '@/stores/guild'
+  import NoChannelView from '@/views/guild/NoChannelView.vue'
 
   const guildStore = useGuildStore()
   const route = useRoute()
