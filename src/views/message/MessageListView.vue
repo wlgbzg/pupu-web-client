@@ -131,6 +131,10 @@ onMounted(() => {
 
 // 滚动到底部
 const scrollBottom = (force: boolean = false, num: string = '') => {
+  if (!messageListRef.value) {
+    return
+  }
+
   if (force || isAtBottom.value) {
     if (messageListRef.value.scrollHeight > messageListRef.value.clientHeight) {
       messageListRef.value.scrollTo(0, messageListRef.value.scrollHeight)
