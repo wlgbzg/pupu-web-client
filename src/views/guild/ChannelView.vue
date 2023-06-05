@@ -33,7 +33,7 @@
   </div>
 </template>
 <script lang='ts' setup>
-  import ChannelGroupEditDrawer from '@/components/drawer/ChannelGroupEditDrawer.vue'
+
   import IconArrowDown from '@/components/icons/channel/IconArrowDown.vue'
   import IconChannel from '@/components/icons/channel/IconChannel.vue'
   import IconSettings from '@/components/icons/channel/IconSettings.vue'
@@ -113,8 +113,9 @@
         {
           label: '编辑类别',
           onClick: () => {
-            Settings({ channelGroupId: groupId })
-          }
+            Settings({ channelGroupId: groupId, nav: 'channelGroupEdit' })
+          },
+          divided: true
         },
         {
           label: '删除类别',
@@ -243,7 +244,6 @@
       x: e.x,
       y: e.y,
       items: [
-
         {
           label: '移动分类',
           children: channelStore.channelInfo.channelGroups.map((item) => {
@@ -259,6 +259,12 @@
           label: '设为默认频道',
           onClick: () => {
             setDefaultChannel(channelId)
+          }
+        },
+        {
+          label: '编辑频道',
+          onClick: () => {
+            Settings({ channelId: channelId, nav: 'channelEdit' })
           }
         },
         {

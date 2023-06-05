@@ -1,48 +1,28 @@
 <script setup lang='ts'>
 
   import { useSettingStore } from '@/stores/setting'
-  import { useChannelStore } from '@/stores/channel'
-  import httpRequest from '@/utils/httpRequest'
-  import { reactive } from 'vue'
-  import { ElMessage } from 'element-plus'
 
   const settingStore = useSettingStore()
-  const channelStore = useChannelStore()
-  const channelGroup = channelStore.getChannelGroup(settingStore.info.data['channelGroupId'])
-  const info = reactive({
-    name: channelGroup?.name
-  })
-  const update = () => {
-    httpRequest.request({
-      url: '/api/v1/channel/updateChannelGroup',
-      method: 'post',
-      data: {
-        id: channelGroup?.id,
-        name: info.name
-      }
-    }).then(data => {
-      channelStore.updateChannelGroup(settingStore.info.data['channelGroupId'], data.name)
-      ElMessage({
-        showClose: true,
-        message: '类别信息修改成功',
-        type: 'success'
-      })
-    }).catch(error => {
-      console.error('请求失败1：', error)
-    })
-  }
+
 </script>
 
 <template>
   <div class='channel-setting-overview'>
     <div class='title'>
-      类别名称
+      频道名称
     </div>
-    <input type='text' class='input' v-model='info.name'>
+    <input type='text' class='input'>
 
     <div class='divider' />
 
-    <button class='btn' @click='update'>保存</button>
+    <div class='title'>
+      频道主题
+    </div>
+    <textarea class='textarea' maxlength='100' placeholder='告诉大家如何使用该频道吧！' />
+
+    <div class='divider' />
+
+    <button class='btn'>保存</button>
   </div>
 </template>
 

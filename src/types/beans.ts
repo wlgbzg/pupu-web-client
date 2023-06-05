@@ -64,6 +64,7 @@ export interface Channel {
 
   // 可修改
   name: string; // 名称
+  intro: string; // 简介
   isPrivate: boolean; // 是否是隐私频道
   readonly: boolean; // 是否是只读频道
   type: number; // 频道类型

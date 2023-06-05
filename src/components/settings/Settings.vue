@@ -2,8 +2,6 @@
 
   import IconClose from '@/components/icons/setting/IconClose.vue'
   import { defineProps, reactive, ref, toRefs } from 'vue'
-  import ChannelGroupEditOverview from '@/views/setting/ChannelGroupEditOverview.vue'
-  import ChannelGroupEditOverview2 from '@/views/setting/ChannelGroupEditOverview2.vue'
   import { useSettingStore } from '@/stores/setting'
 
   const props = defineProps({
@@ -13,23 +11,12 @@
     }
   })
   const { data } = toRefs(props)
+
   const settingStore = useSettingStore()
   settingStore.info.data = data
-  console.log('setting data', data?.value)
+  const navi = settingStore.info.data.nav
 
-  const nav = [{
-    title: '概况',
-    view: ChannelGroupEditOverview
-  },
-    {
-      title: '权限',
-      view: ChannelGroupEditOverview,
-      divider: true
-    },
-    {
-      title: '删除类别',
-      view: ChannelGroupEditOverview2
-    }]
+  const nav = settingStore.nav[navi];
 
   const current = reactive({
     index: 0,
@@ -40,9 +27,11 @@
   const currentComponent = ref()
 
   const changeKey = (index) => {
-    current.index = index
-    current.title = nav[index].title
-    currentComponent.value = nav[index].view
+    if (nav[index].view) {
+      current.index = index
+      current.title = nav[index].title
+      currentComponent.value = nav[index].view
+    }
   }
   changeKey(0)
 

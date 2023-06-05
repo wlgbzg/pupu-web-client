@@ -69,7 +69,16 @@ export const useChannelStore = defineStore('channel', () => {
       }
     }
 
-    return { channelInfo, updateChannels, getChannels, getChannel, deleteChannelGroup, getChannelGroup, updateChannelGroup }
+  const updateChannel = (channelId: string, name: string, intro: string) => {
+    for (const channel of channelInfo.channels) {
+      if (channel.id === channelId) {
+        channel.name = name
+        channel.intro = intro
+      }
+    }
+  }
+
+    return { channelInfo, updateChannels, getChannels, getChannel, deleteChannelGroup, getChannelGroup, updateChannelGroup, updateChannel}
   }
 )
 
