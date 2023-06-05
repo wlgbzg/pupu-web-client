@@ -7,7 +7,7 @@
 </script>
 
 <template>
-  <div class='channel-setting-overview'>
+  <div class='guild-setting-overview'>
     <div class='title'>
       频道名称
     </div>
@@ -28,7 +28,7 @@
 
 <style scoped lang='less'>
 
-  .channel-setting-overview {
+  .guild-setting-overview {
     .title {
       color: #b5bac1;
       font-size: 12px;

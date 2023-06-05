@@ -3,7 +3,7 @@
 
     <!--   头部   -->
     <div class='head-container' @contextmenu.stop.prevent='headContextMenu($event, channelStore.channelInfo.guild?.id)'>
-      <span class='channel-info'>{{ channelStore.channelInfo.guild?.name }}</span>
+      <span class='channel-info'>{{ guildStore.getGuild(route.params.guildId.toString())?.name }}</span>
       <span class='head-btn'><el-icon size='12'><ArrowDownBold /></el-icon></span>
     </div>
 
@@ -330,8 +330,9 @@
       y: e.y,
       items: [
         {
-          label: '创建1频道',
+          label: '服务器设置',
           onClick: () => {
+            Settings({ guildId: guildId, nav: 'guildEdit' })
           },
           divided: true
         },

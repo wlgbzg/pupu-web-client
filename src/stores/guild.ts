@@ -43,7 +43,16 @@ export const useGuildStore = defineStore('guild2', () => {
         guildInfo.guilds.splice(index, 1) // 从数组中删除该元素
       }
     }
-    return { guildInfo, updateGuilds, addGuild, getGuild, exist, deleteGuild }
+
+    const updateGuild = (guild: Guild) => {
+      const index = guildInfo.guilds.findIndex(item => item.id === guild.id)
+      console.log('index', index)
+      guildInfo.guilds.splice(index, 1, guild)
+      console.log('guildInfo.guilds', guildInfo.guilds)
+      return false
+    }
+
+    return { guildInfo, updateGuilds, addGuild, getGuild, exist, deleteGuild, updateGuild }
   }
 )
 

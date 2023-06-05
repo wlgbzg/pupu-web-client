@@ -3,6 +3,7 @@ import { defineStore } from 'pinia'
 import ChannelGroupEditOverview from '@/views/setting/ChannelGroupEditOverview.vue'
 import ChannelGroupEditPermissions from '@/views/setting/ChannelGroupEditPermissions.vue'
 import ChannelEditOverview from '@/views/setting/ChannelEditOverview.vue'
+import GuildEditOverview from '@/views/setting/GuildEditOverview.vue'
 
 
 export const useSettingStore = defineStore('setting', () => {
@@ -30,12 +31,18 @@ export const useSettingStore = defineStore('setting', () => {
       {
         title: '权限',
         view: ChannelGroupEditPermissions
+      }
+    ],
+    guildEdit: [
+      {
+        title: '概况',
+        view: GuildEditOverview
       },
       {
-        title: '邀请',
+        title: '身份组',
         view: ChannelGroupEditPermissions
       }
-    ]
+    ],
   })
 
   return { info, nav }

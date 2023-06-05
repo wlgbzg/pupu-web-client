@@ -22,10 +22,6 @@ export interface User {
   intro: string; // 个人介绍
 }
 
-export interface UserGuildsDTO {
-  userGuilds: UserGuild[];
-  guilds: Guild[];
-}
 
 export interface UserGuild {
   id: string; // ID
