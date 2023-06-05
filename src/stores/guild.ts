@@ -36,7 +36,14 @@ export const useGuildStore = defineStore('guild2', () => {
       }
       return false
     }
-    return { guildInfo, updateGuilds, addGuild, getGuild, exist }
+
+    const deleteGuild = (guildId: string = '') => {
+      const index = guildInfo.guilds.findIndex(item => item.id === guildId)
+      if (index !== -1) {
+        guildInfo.guilds.splice(index, 1) // 从数组中删除该元素
+      }
+    }
+    return { guildInfo, updateGuilds, addGuild, getGuild, exist, deleteGuild }
   }
 )
 

@@ -2,7 +2,7 @@
   <div class='guild-channel-container' @contextmenu.stop.prevent='freeContextMenu'>
 
     <!--   头部   -->
-    <div class='head-container' @contextmenu.stop.prevent='headContextMenu'>
+    <div class='head-container' @contextmenu.stop.prevent='headContextMenu($event, channelStore.channelInfo.guild?.id)'>
       <span class='channel-info'>{{ channelStore.channelInfo.guild?.name }}</span>
       <span class='head-btn'><el-icon size='12'><ArrowDownBold /></el-icon></span>
     </div>
@@ -291,7 +291,40 @@
     })
   }
 
-  const headContextMenu = (e) => {
+  const deleteGuild = (guildId) => {
+    ElMessageBox.confirm(
+      '你确认解散这个社区吗？这个操作是不能撤销的！',
+      '解散社区',
+      {
+        confirmButtonText: '解散',
+        cancelButtonText: '取消',
+        type: 'error',
+        center: true
+      }
+    )
+      .then(() => {
+        httpRequest.request({
+          url: `/api/v1/guild/delete/${guildId}`,
+          method: 'post'
+        }).then(data => {
+
+          guildStore.deleteGuild(guildId)
+
+          ElMessage({
+            type: 'success',
+            message: '解散社区成功'
+          })
+
+          router.replace({ path: `/home` })
+        }).catch(error => {
+          console.error('请求失败1：', error)
+        })
+      })
+      .catch(() => {
+      })
+  }
+
+  const headContextMenu = (e, guildId) => {
     ContextMenu.showContextMenu({
       x: e.x,
       y: e.y,
@@ -299,16 +332,15 @@
         {
           label: '创建1频道',
           onClick: () => {
-          }
+          },
+          divided: true
         },
         {
-          label: 'A submenu',
-          children: [
-            { label: 'Item1' },
-            { label: 'Item2' },
-            { label: 'Item3' }
-          ]
-        }
+          label: '解散社区',
+          onClick: () => {
+            deleteGuild(guildId)
+          }
+        },
       ]
     })
   }
