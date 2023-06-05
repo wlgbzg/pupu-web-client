@@ -89,6 +89,8 @@
       adjustTextareaSize()
     })
     resizeObserver.observe(element)
+
+    textareaRef.value.focus()
   })
 
   const send = () => {

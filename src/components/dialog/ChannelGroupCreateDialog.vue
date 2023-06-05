@@ -10,7 +10,7 @@
       <span class='title'>类别名称</span>
 
       <div class='channel-group-name-input'>
-        <input placeholder='新类别' type='text' v-model='info.channelGroupName' />
+        <input placeholder='新类别' type='text' v-model='info.channelGroupName' ref='inputRef'/>
       </div>
 
       <div class='channel-private' @click='changePrivate'>
@@ -39,7 +39,7 @@
 
 <script lang='ts' setup>
   import { useDialogStore } from '@/stores/dialog'
-  import { reactive, watchEffect } from 'vue'
+  import { nextTick, reactive, ref, watchEffect } from 'vue'
   import IconChannel from '@/components/icons/channel/IconChannel.vue'
   import IconLock from '@/components/icons/channel/IconLock.vue'
   import httpRequest from '@/utils/httpRequest'
@@ -71,8 +71,18 @@
     dialogStore.channelCreate.channelGroup = ''
   }
 
+  const inputRef = ref()
+
   watchEffect(() => {
-    // info.createBtnEnable = !info.guildName
+    if (dialogStore.channelGroupCreate.dialogVisible) {
+      if (inputRef.value) {
+        nextTick(() => {
+          setTimeout(() => {
+            inputRef.value.focus();
+          }, 100);
+        });
+      }
+    }
   })
 
   //

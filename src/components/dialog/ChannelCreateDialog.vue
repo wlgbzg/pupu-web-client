@@ -24,7 +24,7 @@
 
       <div class='channel-group-name-input'>
         <IconChannel style='margin-right: 5px' />
-        <input placeholder='新-频道' type='text' v-model='info.channelGroupName' />
+        <input id='input' placeholder='新-频道' type='text' v-model='info.channelGroupName' ref='inputRef' />
       </div>
 
       <div class='channel-private' @click='changePrivate'>
@@ -53,7 +53,7 @@
 
 <script lang='ts' setup>
   import { useDialogStore } from '@/stores/dialog'
-  import { reactive, watchEffect } from 'vue'
+  import { nextTick, onMounted, reactive, ref, watchEffect } from 'vue'
   import IconChannel from '@/components/icons/channel/IconChannel.vue'
   import IconLock from '@/components/icons/channel/IconLock.vue'
   import httpRequest from '@/utils/httpRequest'
@@ -88,7 +88,6 @@
 
   })
 
-
   const changePrivate = () => {
     info.isPrivate = !info.isPrivate
   }
@@ -105,8 +104,18 @@
     dialogStore.channelCreate.channelGroup = ''
   }
 
+  const inputRef = ref()
+
   watchEffect(() => {
-    // info.createBtnEnable = !info.guildName
+    if (dialogStore.channelCreate.dialogVisible) {
+      if (inputRef.value) {
+        nextTick(() => {
+          setTimeout(() => {
+            inputRef.value.focus();
+          }, 100);
+        });
+      }
+    }
   })
 
   //
