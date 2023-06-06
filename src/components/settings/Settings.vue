@@ -75,7 +75,7 @@
   .setting-page-container {
     height: 100%;
     width: 100%;
-    position: absolute;
+    position: fixed;
     display: flex;
     user-select: none;
 
