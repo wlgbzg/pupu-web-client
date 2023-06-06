@@ -4,6 +4,7 @@ import ChannelGroupEditOverview from '@/views/setting/ChannelGroupEditOverview.v
 import ChannelGroupEditPermissions from '@/views/setting/ChannelGroupEditPermissions.vue'
 import ChannelEditOverview from '@/views/setting/ChannelEditOverview.vue'
 import GuildEditOverview from '@/views/setting/GuildEditOverview.vue'
+import GuildRolePermissions from '@/views/setting/GuildRolePermissions.vue'
 
 
 export const useSettingStore = defineStore('setting', () => {
@@ -39,8 +40,8 @@ export const useSettingStore = defineStore('setting', () => {
         view: GuildEditOverview
       },
       {
-        title: '身份组',
-        view: ChannelGroupEditPermissions
+        title: '角色权限',
+        view: GuildRolePermissions
       }
     ],
   })
