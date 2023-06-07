@@ -1,47 +1,49 @@
-# web-client
+# 软件介绍
+1. 高仿 Discord 、 KOOK （开黑啦） 的频道聊天软件
+2. IM 在线即时通讯，不限制人数，不限制聊天频道人数
+3. 代码质量比较敷衍，学习前端的第一个作品，做了一个月左右
 
-This template should help get you started developing with Vue 3 in Vite.
+# 一些说明
+1. 有同学想接着搞下去做点自己喜欢的东西来玩，不会部署的，可以加Q群 590587904，我协助你
+2. 也欢迎来学习的在校同学
+3. 如果有愿意在当前产品上继续开发下去的同学就最好了，但是需要有一定的水平
 
-## Recommended IDE Setup
+# 技术架构
+1. 服务端: java spring-boot + mongoDB
+2. 客户端: vue3 
+3. 长连接: emqx MQTT 频道订阅的方式
 
-[VSCode](https://code.visualstudio.com/) + [Volar](https://marketplace.visualstudio.com/items?itemName=Vue.volar) (and
-disable
-Vetur) + [TypeScript Vue Plugin (Volar)](https://marketplace.visualstudio.com/items?itemName=Vue.vscode-typescript-vue-plugin).
+# 负载均衡
+1. 服务端代码无状态可以无限制扩容
+2. MongoDB容量上限后，可以做集群
+3. 在spring-boot的service层添加redis的cache
+4. emqx mqtt支持配置集群
 
-## Type Support for `.vue` Imports in TS
+# 目前情况
+1. 基本创建社区、频道、频道分类、聊天、等功能大体能用
+2. 注册登录可以用，没部署阿里云，还不支持手机验证码，目前服务器写死验证码 111111
+3. 所有接口，没限制权限，谁来都是admin
 
-TypeScript cannot handle type information for `.vue` imports by default, so we replace the `tsc` CLI with `vue-tsc` for
-type checking. In editors, we
-need [TypeScript Vue Plugin (Volar)](https://marketplace.visualstudio.com/items?itemName=Vue.vscode-typescript-vue-plugin)
-to make the TypeScript language service aware of `.vue` types.
+# 作者情况
+1. 32岁，08年入行软件研发，爱java，从事IM后端研发多年，三亿社交用户经验，实操2千万在线长连接用户，消息量级3万QPS/秒
+2. 也做过android, vue, py, php, c#等其他一系列
+3. 最近在学前端，在家自律有点差，想找点IM爱好者或者学生党一起来玩
 
-If the standalone TypeScript plugin doesn't feel fast enough to you, Volar has also implemented
-a [Take Over Mode](https://github.com/johnsoncodehk/volar/discussions/471#discussioncomment-1361669) that is more
-performant. You can enable it by the following steps:
+# 示例图片
 
-1. Disable the built-in TypeScript Extension
-    1) Run `Extensions: Show Built-in Extensions` from VSCode's command palette
-    2) Find `TypeScript and JavaScript Language Features`, right click and select `Disable (Workspace)`
-2. Reload the VSCode window by running `Developer: Reload Window` from the command palette.
+#### 1. 聊天主界面
 
-## Customize configuration
+![rm-1.png](rm-1.png)
 
-See [Vite Configuration Reference](https://vitejs.dev/config/).
 
-## Project Setup
+#### 2. 角色权限设置页
 
-```sh
-pnpm install
-```
+![rm-2.png](rm-2.png)
 
-### Compile and Hot-Reload for Development
+#### 3. 登录主界面
 
-```sh
-pnpm dev
-```
+![rm-3.png](rm-3.png)
 
-### Type-Check, Compile and Minify for Production
 
-```sh
-pnpm build
-```
+
+
