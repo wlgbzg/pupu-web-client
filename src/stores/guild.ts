@@ -1,6 +1,6 @@
 import { reactive } from 'vue'
 import { defineStore } from 'pinia'
-import { Guild, UserGuild } from '@/types/beans'
+import { Guild, GuildRole, UserGuild } from '@/types/beans'
 
 export const useGuildStore = defineStore('guild2', () => {
 
@@ -46,13 +46,28 @@ export const useGuildStore = defineStore('guild2', () => {
 
     const updateGuild = (guild: Guild) => {
       const index = guildInfo.guilds.findIndex(item => item.id === guild.id)
-      console.log('index', index)
       guildInfo.guilds.splice(index, 1, guild)
-      console.log('guildInfo.guilds', guildInfo.guilds)
-      return false
     }
 
-    return { guildInfo, updateGuilds, addGuild, getGuild, exist, deleteGuild, updateGuild }
+    const guildRoleInfo: GuildRole[] = reactive([])
+    const updateGuildRoleInfo = (list) => {
+      guildRoleInfo.splice(0)
+      guildRoleInfo.push(...list)
+    }
+
+    const addGuildRoleInfo = (guildRole: GuildRole) => {
+      const index = guildRoleInfo.findIndex(item => item.id === guildRole.id)
+      if (index === -1) {
+        guildRoleInfo.push(guildRole)
+      }
+    }
+
+    const updateGuildRole = (guildRole: GuildRole) => {
+      const index = guildRoleInfo.findIndex(item => item.id === guildRole.id)
+      guildRoleInfo.splice(index, 1, guildRole)
+    }
+
+    return { guildInfo, updateGuilds, addGuild, getGuild, exist, deleteGuild, updateGuild, guildRoleInfo, updateGuildRoleInfo, addGuildRoleInfo, updateGuildRole }
   }
 )
 

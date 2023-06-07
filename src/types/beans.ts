@@ -22,6 +22,19 @@ export interface User {
   intro: string; // 个人介绍
 }
 
+export interface GuildRole {
+  id: string; // ID
+  guildId: string; // 行会id
+  system: boolean;// 是否是系统默认角色
+
+  // 可修改
+  color: number; // 文字组颜色
+  name: string; // 角色名称
+  role: number; // 角色
+  permissions: number;// 权限
+}
+
+
 
 export interface UserGuild {
   id: string; // ID

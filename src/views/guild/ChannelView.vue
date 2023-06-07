@@ -346,6 +346,20 @@
     })
   }
 
+
+  const loadGuildRole = () => {
+    httpRequest.request({
+      url: `/api/v1/guild/guildRoleList/${route.params.guildId}`,
+      method: 'post'
+    }).then(data => {
+      guildStore.updateGuildRoleInfo(data)
+    }).catch(error => {
+      console.error('请求失败1：', error)
+    })
+  }
+  loadGuildRole()
+
+
 </script>
 <style lang='less' scoped>
   @import "@/assets/less/base";

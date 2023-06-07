@@ -54,7 +54,7 @@
 </script>
 
 <template>
-  <div class='guild-setting-overview'>
+  <div class='guild-role-permissions'>
     <div class='title'>
       社区头像
     </div>
@@ -97,7 +97,8 @@
 
 <style scoped lang='less'>
 
-  .guild-setting-overview {
+  .guild-role-permissions {
+
 
     .file-input-box {
       margin-top: 30px;
@@ -180,14 +181,6 @@
       border-radius: 4px;
     }
 
-    .btn {
-      cursor: pointer;
-      padding: 10px 30px;
-      background-color: #23a55a;
-      border: none;
-      color: white;
-      border-radius: 4px;
-    }
   }
 
 

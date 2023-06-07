@@ -7,7 +7,7 @@
 </script>
 
 <template>
-  <div class='guild-setting-overview'>
+  <div class='guild-role-permissions'>
     <div class='title'>
       频道名称
     </div>
@@ -28,7 +28,7 @@
 
 <style scoped lang='less'>
 
-  .guild-setting-overview {
+  .guild-role-permissions {
     .title {
       color: #b5bac1;
       font-size: 12px;
